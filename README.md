@@ -6,12 +6,12 @@ Install it, usually it's path to c:\Program Files\ffmpeg
 
 You can use these batches in a few different ways:
 
-##WAY 1
+## WAY 1
 Just drag your video over the .bat file icon to start
 
 OR
 
-##WAY 2
+## WAY 2
 You can integrate these batches as commands right into Windows Send To menu (right click on any file)
 For this you need:
 
