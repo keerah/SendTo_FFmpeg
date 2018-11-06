@@ -2,14 +2,14 @@
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.03 by Keerah.com                                ---]
 ECHO [---  MP4 h264 module has been invoked                                         ---]
-ECHO [---  Preset: CUDA 420 main, Slow, 20Mbps, kf 2 sec Audio Copy                 ---]
+ECHO [---  Preset: CUDA 420 main, 20 Mbps, keyfr 2 sec, Audio Copy                  ---]
 IF %1.==. (
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     NO FILE SPECIFIED                                                           ]
 ) ELSE (
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     Transcoding...                                                              ]
-	"c:\Program Files\ffmpeg\bin\ffmpeg.exe" -vsync 0 -hwaccel cuvid -i %1 -c:v h264_nvenc -profile:v main -preset slow -b:v 20M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a copy -y %~n1_cuda420_10Mbit_slow.mp4
+	"c:\Program Files\ffmpeg\bin\ffmpeg.exe" -vsync 0 -hwaccel cuvid -i %1 -c:v h264_nvenc -profile:v main -preset slow -b:v 20M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a copy -y %~n1_cuda420_20Mbit_slow.mp4
 )
 ECHO [---------------------------------------------------------------------------------]
 ECHO [     SERVED                                                                      ]

@@ -2,7 +2,7 @@
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.03 by Keerah.com                                ---]
 ECHO [---  MP4 h264 module has been invoked                                         ---]
-ECHO [---  Preset: CUDA 420 man 4.0, Slow, 40Mbps, kf 2sec, Audio Copy              ---]
+ECHO [---  Preset: CUDA 420 main 4.0, 40 Mbps, keyfr 2 sec, Audio Copy              ---]
 IF %1.==. (
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     NO FILE SPECIFIED                                                           ]

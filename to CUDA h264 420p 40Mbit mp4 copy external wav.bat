@@ -2,7 +2,7 @@
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.03 by Keerah.com                                ---]
 ECHO [---  MP4 h264 module has been invoked                                         ---]
-ECHO [---  Preset: CUDA 420 main, Slow, 40Mbps, kf 2 sec, External Audio to AAC     ---]
+ECHO [---  Preset: CUDA 420 main, 40 Mbps, keyfr 2 sec, External Audio to AAC 256   ---]
 ECHO [---  Using external audio source file: %~n1.wav
 IF %1.==. (
 	ECHO [---------------------------------------------------------------------------------]
