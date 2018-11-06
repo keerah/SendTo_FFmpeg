@@ -1,4 +1,4 @@
-# sendto_ffmpeg
+# SendTo_FFmpeg
 This is a set of Windows **batch** scripts for effortless converting/transcoding videos using the free **FFmpeg** tool.
 First you need to download **FFmpeg** itself from [here](https://www.ffmpeg.org/download.html), it's free.
 Install it, by default its path is **c:\Program Files\ffmpeg**
@@ -33,6 +33,7 @@ and then will place the result into same folder with **__output** added to your 
 
 Use it in CMD or Powershell as usual.
 
+If you're on a Mac you can still use the FFmpeg parameters in your own scripts.
 
 Each batch has a brief description of its functionality in its REM section.
 
