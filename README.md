@@ -33,7 +33,7 @@ and then will place the result into same folder with **__output** added to your 
 
 Use it in CMD or Powershell as usual.
 
-If you're on a Mac you can still use the FFmpeg parameters in your own scripts.
+If you're on a Mac you can still use the FFmpeg parameters from these scripts to create your own.
 
 Each batch has a brief description of its functionality in its REM section.
 
