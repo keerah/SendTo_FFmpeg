@@ -7,15 +7,14 @@ You can use these batches in a few different ways:
 
 ## 1st way
 Just drag your video over the corresponding **.bat** file icon.
-You can drag files one by one, each will be encoded in a separate process.
-By now only the **Gif** bat supports multiple files at once.
+You can drag files one by one, each will be encoded in a separate process, you can also select multiple files for any script except a few which mux external audio.
 
-## 2nd way
+## 2nd way (how I use it)
 You can integrate these batches as commands into Windows' **Send To** menu (right click on any file in the Explorer).
 
 For this you need:
 
-1. Put all of these batches to any convenient location (or use your cloud sync folder to have these presets on all your machines). Find the file named **sendtoffmpeg_settings.cmd** and change the path to **FFmpeg** installation if it's different from **c:\Program Files\ffmpeg**. You can also change here a few other settings for all scripts at once.
+1. Put all of these batches to any convenient location (I use my cloud sync folder to have these presets on all machines). Find the file named **sendtoffmpeg_settings.cmd** and edit it to change the path to **FFmpeg** installation if it's different from **c:\Program Files\ffmpeg**. You can also change here a few other settings for all scripts at once.
 
 2. Create the shortcuts for these files (Alt drag). Place these shortcuts into **%userprofile%/SendTo** or on Windows 10 into **C:\Users\[YOUR USER NAME]\AppData\Roaming\Microsoft\Windows\SendTo**
 
