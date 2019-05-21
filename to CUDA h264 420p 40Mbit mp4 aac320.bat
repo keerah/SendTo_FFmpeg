@@ -14,7 +14,7 @@ CALL "%cmdp%sendtoffmpeg_settings.cmd"
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                 ---]
 ECHO [---  Multi MP4 h264 module has been invoked                                   ---]
-ECHO [---  Preset: CUDA 420 main 4.0, 40 Mbps, keyfr 2 sec, Audio Copy              ---]
+ECHO [---  Preset: CUDA 420 main 4.0, 40 Mbps, keyfr 2 sec, Audio AAC 320           ---]
 
 IF %argCount% == 0 (
 	ECHO [---------------------------------------------------------------------------------]
@@ -30,7 +30,7 @@ IF %argCount% GTR 1 (
 	FOR /L %%i IN (1,1,%argCount%) DO (
 		ECHO [---------------------------------------------------------------------------------]
 		ECHO [     Transcoding %%i of %argCount%: !argVn[%%i]!
-	"%ffpath%ffmpeg.exe" -v %vbl% -vsync 0 -hwaccel cuvid -i "!argVec[%%i]!" -c:v h264_nvenc -profile:v main -preset slow -b:v 40M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a copy -y "!argVn[%%i]!_cuda420_40Mbit.mp4"
+	"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -c:v h264_nvenc -profile:v main -preset slow -b:v 40M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a aac -b:a 320k -y "!argVn[%%i]!_cuda420_40Mbit_aac320.mp4"
 	)
 
 :End

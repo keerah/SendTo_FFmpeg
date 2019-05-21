@@ -1,24 +1,43 @@
 @ECHO OFF
-ECHO [---------------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v1.03 by Keerah.com                                      ---]
-ECHO [---  MP4 h264 module has been invoked                                               ---]
-ECHO [---  Preset: 420 main 4.0, veryslow, crf 18, 1080p, GRAIN, keyfr 2 sec Audio Copy   ---]
-IF %1.==. (
-	ECHO [---------------------------------------------------------------------------------------]
-	ECHO [     NO FILE SPECIFIED                                                                 ]
-) ELSE (
-	ECHO [---------------------------------------------------------------------------------------]
-	ECHO [     Transcoding...                                                                    ]
-	"c:\Program Files\ffmpeg\bin\ffmpeg.exe" -i %1 -c:v libx264 -profile:v main -level 4.0 -preset veryslow -crf 18 -pix_fmt yuv420p -vf scale=1920:1080 -sws_flags bicubic -tune grain -force_key_frames 0:00:02 -c:a copy -y %~n1_420_highest_1080p.mp4
+setlocal enabledelayedexpansion
+
+set argCount=0
+for %%x in (%*) do (
+   set /A argCount+=1
+   set "argVec[!argCount!]=%%~x"
+   set "argVn[!argCount!]=%%~nx"
 )
+
+SET "cmdp=%~dp0"
+CALL "%cmdp%sendtoffmpeg_settings.cmd"
+
 ECHO [---------------------------------------------------------------------------------------]
-ECHO [---  SERVED                                                                            ]
-ECHO [---------------------------------------------------------------------------------------]
-PAUSE
+ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                       ---]
+ECHO [---  Multi MP4 h264 module has been invoked                                         ---]
+ECHO [---  Preset: 420 main 4.0, veryslow, crf 18, 1080p, GRAIN, keyfr 2 sec Audio Copy   ---]
 
-rem Do not forget to replace the path to FFmpeg if its installed into a different folder in your system.
+IF %argCount% == 0 (
+	ECHO [---------------------------------------------------------------------------------]
+	ECHO [     NO FILE SPECIFIED                                                           ]
+	GOTO End
+	)
+	
+IF %argCount% GTR 1 (
+	ECHO [---------------------------------------------------------------------------------]
+	ECHO [     %argCount% files queued to encode
+	)
+	
+	FOR /L %%i IN (1,1,%argCount%) DO (
+		ECHO [---------------------------------------------------------------------------------]
+		ECHO [     Transcoding %%i of %argCount%: !argVn[%%i]!
+	"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -c:v libx264 -profile:v main -level 4.0 -preset veryslow -crf 18 -pix_fmt yuv420p -vf scale=1920:1080 -sws_flags bicubic -tune grain -force_key_frames 0:00:02 -c:a copy -y "!argVn[%%i]!_420_veryhigh_1080p.mp4"
+	)
 
-rem PAUSE command in the end keeps the batch window open after it's finished just to let you see the messages.
-rem If you need more info on encoding then change verbose level -v command from -v warning to -v info.
+:End
+ECHO [---------------------------------------------------------------------------------]
+ECHO [     SERVED                                                                      ]
+ECHO [---------------------------------------------------------------------------------]
+if %pse% GTR 0 PAUSE
 
-rem ==== this is a dynamic preset I use to encode things differently
+rem the main settings are defined in file sendtoffmpeg_settings.cmd, read the description insite it
+rem The output video will have keyframes each 2 seconds due to -force_key_frames 0:00:02

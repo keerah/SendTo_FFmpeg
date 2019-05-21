@@ -1,25 +1,46 @@
 @ECHO OFF
+setlocal enabledelayedexpansion
+
+set argCount=0
+for %%x in (%*) do (
+   set /A argCount+=1
+   set "argVec[!argCount!]=%%~x"
+   set "argVn[!argCount!]=%%~nx"
+)
+
+SET "cmdp=%~dp0"
+CALL "%cmdp%sendtoffmpeg_settings.cmd"
+
 ECHO [---------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v1.03 by Keerah.com                                ---]
-ECHO [---  MP4 h264 module has been invoked                                         ---]
+ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                 ---]
+ECHO [---  Multi MP4 h264 module has been invoked                                   ---]
 ECHO [---  Preset: 420 baseline 3.0, slow, crf 24, keyfr 2 sec, Audio AAC 128       ---]
-IF %1.==. (
+
+IF %argCount% == 0 (
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     NO FILE SPECIFIED                                                           ]
-) ELSE (
+	GOTO End
+	)
+	
+IF %argCount% GTR 1 (
 	ECHO [---------------------------------------------------------------------------------]
-	ECHO [     Transcoding...                                                              ]
-	"c:\Program Files\ffmpeg\bin\ffmpeg.exe" -i %1 -c:v libx264 -profile:v baseline -level 3.0 -pix_fmt yuv420p -preset slow -crf 24 -force_key_frames 0:00:02 -c:a aac -b:a 128k -y %~n1_420_constrL3.mp4
-)
+	ECHO [     %argCount% files queued to encode
+	)
+	
+	FOR /L %%i IN (1,1,%argCount%) DO (
+		ECHO [---------------------------------------------------------------------------------]
+		ECHO [     Transcoding %%i of %argCount%: !argVn[%%i]!
+	"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -c:v libx264 -profile:v baseline -level 3.0 -pix_fmt yuv420p -preset slow -crf 24 -force_key_frames 0:00:02 -c:a aac -b:a 128k -y "!argVn[%%i]!_420_Baseline3.mp4"
+	)
+
+:End
 ECHO [---------------------------------------------------------------------------------]
 ECHO [     SERVED                                                                      ]
 ECHO [---------------------------------------------------------------------------------]
-PAUSE
+if %pse% GTR 0 PAUSE
 
-rem Do not forget to replace the path to FFmpeg if its installed into a different folder in your system.
-
+rem the main settings are defined in file sendtoffmpeg_settings.cmd, read the description insite it
+rem The output video will have keyframes each 2 seconds due to -force_key_frames 0:00:02
 rem This batch encodes to a very strict (very compatible) Baseline v3.0 profile 
 rem It also reencodes the audio to 128 kbps AAC to guarantee full compatibility to virtually any player
-
-rem PAUSE command in the end keeps the batch window open after it's finished just to let you see the messages.
 rem If you need more info on encoding then change verbose level -v command from -v warning to -v info.

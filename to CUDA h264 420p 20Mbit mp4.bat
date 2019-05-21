@@ -1,27 +1,47 @@
 @ECHO OFF
+setlocal enabledelayedexpansion
+
+set argCount=0
+for %%x in (%*) do (
+   set /A argCount+=1
+   set "argVec[!argCount!]=%%~x"
+   set "argVn[!argCount!]=%%~nx"
+)
+
+SET "cmdp=%~dp0"
+CALL "%cmdp%sendtoffmpeg_settings.cmd"
+
 ECHO [---------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v1.03 by Keerah.com                                ---]
-ECHO [---  MP4 h264 module has been invoked                                         ---]
+ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                 ---]
+ECHO [---  Multi MP4 h264 module has been invoked                                   ---]
 ECHO [---  Preset: CUDA 420 main, 20 Mbps, keyfr 2 sec, Audio Copy                  ---]
-IF %1.==. (
+
+IF %argCount% == 0 (
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     NO FILE SPECIFIED                                                           ]
-) ELSE (
+	GOTO End
+	)
+	
+IF %argCount% GTR 1 (
 	ECHO [---------------------------------------------------------------------------------]
-	ECHO [     Transcoding...                                                              ]
-	"c:\Program Files\ffmpeg\bin\ffmpeg.exe" -vsync 0 -hwaccel cuvid -i %1 -c:v h264_nvenc -profile:v main -preset slow -b:v 20M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a copy -y %~n1_cuda420_20Mbit_slow.mp4
-)
+	ECHO [     %argCount% files queued to encode
+	)
+	
+	FOR /L %%i IN (1,1,%argCount%) DO (
+		ECHO [---------------------------------------------------------------------------------]
+		ECHO [     Transcoding %%i of %argCount%: !argVn[%%i]!
+	"%ffpath%ffmpeg.exe" -v %vbl% -vsync 0 -hwaccel cuvid -i "!argVec[%%i]!" -c:v h264_nvenc -profile:v main -preset slow -b:v 20M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a copy -y "!argVn[%%i]!_cuda420_20Mbit.mp4"
+	)
+
+:End
 ECHO [---------------------------------------------------------------------------------]
 ECHO [     SERVED                                                                      ]
 ECHO [---------------------------------------------------------------------------------]
-PAUSE
+if %pse% GTR 0 PAUSE
 
-rem Do not forget to replace the path to FFmpeg if its installed into a different folder in your system.
-
-rem As you can see it uses a separate Nvidia codec h264_nvenc.
+rem the main settings are defined in file sendtoffmpeg_settings.cmd, read the description insite it
+rem This preset uses a separate Nvidia codec h264_nvenc.
 rem For more information on the codec and its parameters refer to Nvidia's application note
 rem https://developer.nvidia.com/designworks/dl/Using_FFmpeg_with_NVIDIA_GPU_Hardware_Acceleration-pdf
 rem Just one hint from me on -b:v 20M argument, which defines the bitrate for the output.
-
-rem PAUSE command in the end keeps the batch window open after it's finished just to let you see the messages.
-rem If you need more info on encoding then change verbose level -v command from -v warning to -v info.
+rem The output video will have keyframes each 2 seconds due to -force_key_frames 0:00:02
