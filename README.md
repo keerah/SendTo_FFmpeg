@@ -33,9 +33,5 @@ and then will place the result into same folder with something like **_420_high.
 
 Use it in CMD or Powershell as usual.
 
-If you're on a Mac you can still use the FFmpeg parameters from these scripts to create your own.
-
-Each batch has a brief description of its functionality in its REM section.
-
-You can visit my [blog](https://keeraah.blogspot.com/2018/02/ffmpeg-lifehack-1.html) for more info.
-I update this batch set regularly.
+This is works Windows OS only. If you're on a Mac you can still use the FFmpeg parameters from these scripts to create your own.
+Each batch has a brief description of its functionality. The global settings for scripts and their descriptions are in the **sendtoffmpeg_settings.cmd**. You can visit my [blog](https://keeraah.blogspot.com/2018/02/ffmpeg-lifehack-1.html) for more info. I update this batch set regularly.
