@@ -1,5 +1,8 @@
 # SendTo_FFmpeg
-This is a set of Windows **batch** scripts for effortless converting/transcoding videos using the free **FFmpeg** tool. It is a set of tools I develop mainly for myself and it saves me tons of time every day. Click "Clone or donwload" on this page to get all the scripts, its free forever.
+This is a set of Windows **batch** scripts for effortless converting/transcoding videos using the free **FFmpeg** tool. It is a set of tools I develop mainly for myself and it saves me tons of time every day.
+![menu img](https://i.imgur.com/1SOp2wO.png "SendTo_FFmpeg presets in the standard windows Send To menu")
+
+Click "Clone or donwload" on this page to get all the scripts, its free forever.
 First you need to download **FFmpeg** itself from [here](https://www.ffmpeg.org/download.html), it's free.
 Install it (extract), by default its path is **c:\Program Files\ffmpeg**. If you install it into a different path than this, you will need to edit the path to **FFmpeg.exe** in the main settings file **sendtoffmpeg_settings.cmd**. There're more parameters inside with description.
 
