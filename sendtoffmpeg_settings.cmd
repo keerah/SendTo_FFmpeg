@@ -1,17 +1,19 @@
-REM Send_To_FFmpeg settings file
-REM You need to be careful here, cause it's an executable part of the script for each preset
+REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
+REM Copyright (c) 2018-2019 Keerah, keerah.com. All rights reserved
+REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
 
-REM Path to ffmpeg.exe
+REM SendTo_FFmpeg settings file
+REM You need to be careful here, cause it's an executable part of the script for each preset
+REM Multiple files are not implemented for mux (external audio) scripts
+
+rem Path to ffmpeg.exe
 set "ffpath=c:\Program Files\ffmpeg\bin\"
 
-REM FFmpeg verbosity level, use "info" for full verbosity
+rem FFmpeg verbosity level, use "info" for full verbosity
 set "vbl=warning" 
 
-REM Enable pause after encoding, any positive value enables the pause
+rem Enable pause after encoding, any positive value enables the pause
 set /A pse=1
 
-REM  Descriptive naming for output files, any positive value enables description (not yet implemented)
+rem  Descriptive naming for output files, any positive value enables description
 set /A dscr=1
-
-REM Send_To_FFmpeg is a set of windows batches for effortless and free transcoding
-REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg

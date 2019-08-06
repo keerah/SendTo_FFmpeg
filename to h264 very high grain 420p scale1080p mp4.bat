@@ -1,4 +1,8 @@
 @ECHO OFF
+REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
+REM Copyright (c) 2018-2019 Keerah, keerah.com. All rights reserved
+REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
+
 setlocal enabledelayedexpansion
 
 set argCount=0
@@ -17,20 +21,26 @@ ECHO [---  Multi MP4 h264 module has been invoked                               
 ECHO [---  Preset: 420 main 4.0, veryslow, crf 18, 1080p, GRAIN, keyfr 2 sec Audio Copy   ---]
 
 IF %argCount% == 0 (
+
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     NO FILE SPECIFIED                                                           ]
 	GOTO End
-	)
+)
 	
 IF %argCount% GTR 1 (
+
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     %argCount% files queued to encode
-	)
+)
+
+	IF %dscr% GTR 0 (SET "dscrName=_420_veryhigh_1080p") ELSE (SET "dscrName=")
 	
 	FOR /L %%i IN (1,1,%argCount%) DO (
+		
 		ECHO [---------------------------------------------------------------------------------]
 		ECHO [     Transcoding %%i of %argCount%: !argVn[%%i]!
-	"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -c:v libx264 -profile:v main -level 4.0 -preset veryslow -crf 18 -pix_fmt yuv420p -vf scale=1920:1080 -sws_flags bicubic -tune grain -force_key_frames 0:00:02 -c:a copy -y "!argVn[%%i]!_420_veryhigh_1080p.mp4"
+		
+		"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -c:v libx264 -profile:v main -level 4.0 -preset veryslow -crf 18 -pix_fmt yuv420p -vf scale=1920:1080 -sws_flags bicubic -tune grain -force_key_frames 0:00:02 -c:a copy -y "!argVn[%%i]!%dscrName%.mp4"
 	)
 
 :End
@@ -39,5 +49,5 @@ ECHO [     SERVED                                                               
 ECHO [---------------------------------------------------------------------------------]
 if %pse% GTR 0 PAUSE
 
-rem the main settings are defined in file sendtoffmpeg_settings.cmd, read the description insite it
+rem the main settings are defined in file sendtoffmpeg_settings.cmd, read the description inside it
 rem The output video will have keyframes each 2 seconds due to -force_key_frames 0:00:02

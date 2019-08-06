@@ -1,4 +1,8 @@
 @ECHO OFF
+REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
+REM Copyright (c) 2018-2019 Keerah, keerah.com. All rights reserved
+REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
+
 setlocal enabledelayedexpansion
 
 set argCount=0
@@ -16,25 +20,34 @@ ECHO [---  Multi GIF module has been invoked                                    
 ECHO [---  Preset: 15 fps, 640px, 2 pass                                            ---]
 
 IF %argCount% == 0 (
+	
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     NO FILE SPECIFIED                                                           ]
 	GOTO End
-	)
+)
 	
 IF %argCount% GTR 1 (
+	
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     %argCount% files queued to encode
-	)
+)
+	
+	IF %dscr% GTR 0 (SET "dscrName=_hqgif") ELSE (SET "dscrName=")
 	
 	FOR /L %%i IN (1,1,%argCount%) DO (
+		
 		ECHO [---------------------------------------------------------------------------------]
 		ECHO [     Encoding file %%i of %argCount%
 		ECHO [     STAGE 1: Generating a palette                                               ]
+		
 		"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -vf fps=15,scale=640:-1:flags=lanczos,palettegen -y "!argVec[%%i]!"_palette.png  
+		
 		ECHO [---------------------------------------------------------------------------------]
 		ECHO [     Encoding file %%i of %argCount%
 		ECHO [     STAGE 2: Encoding to Gif using the generatied palette                       ]
-		"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -i "!argVec[%%i]!"_palette.png -filter_complex "fps=15,scale=640:-1:flags=lanczos[x];[x][1:v]paletteuse" -y "!argVec[%%i]!"_hqgif.gif 
+		
+		"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -i "!argVec[%%i]!"_palette.png -filter_complex "fps=15,scale=640:-1:flags=lanczos[x];[x][1:v]paletteuse" -y "!argVec[%%i]!"%dscrName%.gif 
+		
 		IF EXIST "!argVec[%%i]!"_palette.png DEL /s "!argVec[%%i]!"_palette.png > nul
 	)
 

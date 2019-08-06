@@ -1,5 +1,8 @@
-@ECHO OFF
+REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
+REM Copyright (c) 2018-2019 Keerah, keerah.com. All rights reserved
+REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
 
+@ECHO OFF
 
 SET "cmdp=%~dp0"
 CALL "%cmdp%sendtoffmpeg_settings.cmd"
@@ -9,23 +12,34 @@ ECHO [---  SendTo FFmpeg encoder v1.03 by Keerah.com                            
 ECHO [---  audio muxing module has been invoked                                     ---]
 ECHO [---  Preset: video copy, mux external mp3 to aac 256                          ---]
 ECHO [---  Using external audio source file: %~n1.mp3
+
 IF %1.==. (
+
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     NO FILE SPECIFIED                                                           ]
+
 ) ELSE (
+
 	IF not EXIST "%~n1.mp3" (
+
 		ECHO [---------------------------------------------------------------------------------]
 		ECHO [     Couldn't find the external audio file: %~n1.wav
 		GOTO End
 	)	
+
+	IF %dscr% GTR 0 (SET "dscrName=_mux_aac256") ELSE (SET "dscrName=")
+
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     Transcoding...                                                              ]
-	"%ffpath%ffmpeg.exe" -v %vbl% -i %1 -i "%~n1.mp3" -codec copy -c:a aac -b:a 256k -shortest -y "%~n1_mux_aac256.mp4"
+	
+	"%ffpath%ffmpeg.exe" -v %vbl% -i %1 -i "%~n1.mp3" -codec copy -c:a aac -b:a 256k -shortest -y "%~n1!%dscrName%.mp4"
 )
+
 :End
 ECHO [---------------------------------------------------------------------------------]
 ECHO [     SERVED                                                                      ]
 ECHO [---------------------------------------------------------------------------------]
+
 IF %pse% GTR 0 PAUSE
 
 rem the main settings are defined in file sendtoffmpeg_settings.cmd, read the description inside it
