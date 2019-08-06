@@ -36,5 +36,7 @@ Use it in CMD or Powershell as usual.
 ## Notes
 
 This works with Windows OS only. If you're on a Mac you can reuse the FFmpeg parameters from these scripts to create your own.
+
 Each batch has a brief description of its functionality inside. SendTo_FFmpeg has its global settings: Path to FFmpeg, FFmpeg verbosity level, pause after encoding, and descriptive naming, they affect all batches at once. You can change them by editing **sendtoffmpeg_settings.cmd**, their brief description also included. 
+
 You can visit my [blog](https://keeraah.blogspot.com/2018/02/ffmpeg-lifehack-1.html) for more info. I update this batch set regularly.
