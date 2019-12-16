@@ -11,13 +11,21 @@ for %%x in (%*) do (
    set "argVec[!argCount!]=%%~x"
 )
 
-SET "cmdp=%~dp0"
-CALL "%cmdp%sendtoffmpeg_settings.cmd"
-
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.15 by Keerah.com                                ---]
 ECHO [---  Multi GIF module has been invoked                                        ---]
 ECHO [---  Preset: 15 fps, 420px, 2 pass                                            ---]
+
+SET "cmdp=%~dp0"
+SET "argp=%~dp1"
+
+IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
+	CALL "%argp%sendtoffmpeg_settings.cmd"
+	ECHO [---  Settings: LOCAL                                                          ---]
+) ELSE (
+	CALL "%cmdp%sendtoffmpeg_settings.cmd"
+	ECHO [---  Settings: GLOBAL                                                         ---]
+)
 
 IF %argCount% == 0 (
 	
@@ -32,24 +40,24 @@ IF %argCount% GTR 1 (
 	ECHO [     %argCount% files queued to encode
 )
 	
-	IF %dscr% GTR 0 (SET "dscrName=_hqgif") ELSE (SET "dscrName=")
+IF %dscr% GTR 0 (SET "dscrName=_hqgif") ELSE (SET "dscrName=")
+
+FOR /L %%i IN (1,1,%argCount%) DO (
 	
-	FOR /L %%i IN (1,1,%argCount%) DO (
-		
-		ECHO [---------------------------------------------------------------------------------]
-		ECHO [     Encoding file %%i of %argCount%
-		ECHO [     STAGE 1: Generating a palette                                               ]
-		
-		"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -vf fps=15,scale=420:-1:flags=lanczos,palettegen -y "!argVec[%%i]!"_palette.png  
-		
-		ECHO [---------------------------------------------------------------------------------]
-		ECHO [     Encoding file %%i of %argCount%
-		ECHO [     STAGE 2: Encoding to Gif using the generatied palette                       ]
-		
-		"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -i "!argVec[%%i]!"_palette.png -filter_complex "fps=15,scale=420:-1:flags=lanczos[x];[x][1:v]paletteuse" -y "!argVec[%%i]!"%dscrName%.gif 
-		
-		IF EXIST "!argVec[%%i]!"_palette.png DEL /s "!argVec[%%i]!"_palette.png > nul
-	)
+	ECHO [---------------------------------------------------------------------------------]
+	ECHO [     Encoding file %%i of %argCount%
+	ECHO [     STAGE 1: Generating a palette                                               ]
+	
+	"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -vf fps=15,scale=420:-1:flags=lanczos,palettegen -y "!argVec[%%i]!"_palette.png  
+	
+	ECHO [---------------------------------------------------------------------------------]
+	ECHO [     Encoding file %%i of %argCount%
+	ECHO [     STAGE 2: Encoding to Gif using the generatied palette                       ]
+	
+	"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -i "!argVec[%%i]!"_palette.png -filter_complex "fps=15,scale=420:-1:flags=lanczos[x];[x][1:v]paletteuse" -y "!argVec[%%i]!"%dscrName%.gif 
+	
+	IF EXIST "!argVec[%%i]!"_palette.png DEL /s "!argVec[%%i]!"_palette.png > nul
+)
 
 :End
 ECHO [---------------------------------------------------------------------------------]

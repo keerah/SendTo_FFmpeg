@@ -1,17 +1,26 @@
+@ECHO OFF
 REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
 REM Copyright (c) 2018-2019 Keerah, keerah.com. All rights reserved
 REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
 
-@ECHO OFF
-
-SET "cmdp=%~dp0"
-CALL "%cmdp%sendtoffmpeg_settings.cmd"
+setlocal enabledelayedexpansion
 
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.03 by Keerah.com                                ---]
-ECHO [---  audio muxing module has been invoked                                     ---]
+ECHO [---  audio muxing module has been invoked, this preset is single file only    ---]
 ECHO [---  Preset: video copy, mux external mp3                                     ---]
 ECHO [---  Using external audio source file: %~n1.mp3
+
+SET "cmdp=%~dp0"
+SET "argp=%~dp1"
+
+IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
+	CALL "%argp%sendtoffmpeg_settings.cmd"
+	ECHO [---  Settings: LOCAL                                                          ---]
+) ELSE (
+	CALL "%cmdp%sendtoffmpeg_settings.cmd"
+	ECHO [---  Settings: GLOBAL                                                         ---]
+)
 
 IF %1.==. (
 
@@ -21,6 +30,7 @@ IF %1.==. (
 ) ELSE (
 	
 	IF not EXIST "%~n1.mp3" (
+		
 		ECHO [---------------------------------------------------------------------------------]
 		ECHO [     Couldn't find the external audio file: %~n1.wav
 		GOTO End

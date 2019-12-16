@@ -5,14 +5,22 @@ REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmp
 
 setlocal enabledelayedexpansion
 
-SET "cmdp=%~dp0"
-CALL "%cmdp%sendtoffmpeg_settings.cmd"
-
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.03 by Keerah.com                                ---]
-ECHO [---  MP4 h264 module has been invoked                                         ---]
+ECHO [---  MP4 h264 module has been invoked, this preset is single file only        ---]
 ECHO [---  Preset: CUDA 420 main, 40 Mbps, keyfr 2 sec, External Audio to AAC 256   ---]
 ECHO [---  Using external audio source file: %~n1.wav
+
+SET "cmdp=%~dp0"
+SET "argp=%~dp1"
+
+IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
+	CALL "%argp%sendtoffmpeg_settings.cmd"
+	ECHO [---  Settings: LOCAL                                                          ---]
+) ELSE (
+	CALL "%cmdp%sendtoffmpeg_settings.cmd"
+	ECHO [---  Settings: GLOBAL                                                         ---]
+)
 
 IF %1.==. (
 

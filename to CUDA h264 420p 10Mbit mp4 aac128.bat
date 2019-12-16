@@ -12,34 +12,44 @@ for %%x in (%*) do (
    set "argVn[!argCount!]=%%~nx"
 )
 
-SET "cmdp=%~dp0"
-CALL "%cmdp%sendtoffmpeg_settings.cmd"
-
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                 ---]
 ECHO [---  Multi MP4 h264 module has been invoked                                   ---]
 ECHO [---  Preset: CUDA 420 main, 10 Mbps, keyfr 2 sec, Audio AAC 128               ---]
 
+SET "cmdp=%~dp0"
+SET "argp=%~dp1"
+
+IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
+	CALL "%argp%sendtoffmpeg_settings.cmd"
+	ECHO [---  Settings: LOCAL                                                          ---]
+) ELSE (
+	CALL "%cmdp%sendtoffmpeg_settings.cmd"
+	ECHO [---  Settings: GLOBAL                                                         ---]
+)
+
 IF %argCount% == 0 (
+
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     NO FILE SPECIFIED                                                           ]
 	GOTO End
-	)
+)
 	
 IF %argCount% GTR 1 (
+
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     %argCount% files queued to encode
-	)
+)
 	
-	IF %dscr% GTR 0 (SET "dscrName=_cuda420_10Mbit_aac128") ELSE (SET "dscrName=")
+IF %dscr% GTR 0 (SET "dscrName=_cuda420_10Mbit_aac128") ELSE (SET "dscrName=")
+
+FOR /L %%i IN (1,1,%argCount%) DO (
 	
-	FOR /L %%i IN (1,1,%argCount%) DO (
-		
-		ECHO [---------------------------------------------------------------------------------]
-		ECHO [     Transcoding %%i of %argCount%: !argVn[%%i]!
-		
-		"%ffpath%ffmpeg.exe" -v %vbl% -vsync 0 -hwaccel cuvid -i "!argVec[%%i]!" -c:v h264_nvenc -profile:v main -preset slow -b:v 10M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a aac -b:a 128k -y "!argVn[%%i]!%dscrName%.mp4"
-	)
+	ECHO [---------------------------------------------------------------------------------]
+	ECHO [     Transcoding %%i of %argCount%: !argVn[%%i]!
+	
+	"%ffpath%ffmpeg.exe" -v %vbl% -vsync 0 -hwaccel cuvid -i "!argVec[%%i]!" -c:v h264_nvenc -profile:v main -preset slow -b:v 10M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a aac -b:a 128k -y "!argVn[%%i]!%dscrName%.mp4"
+)
 
 :End
 ECHO [---------------------------------------------------------------------------------]

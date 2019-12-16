@@ -12,13 +12,21 @@ for %%x in (%*) do (
    set "argVn[!argCount!]=%%~nx"
 )
 
-SET "cmdp=%~dp0"
-CALL "%cmdp%sendtoffmpeg_settings.cmd"
-
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                 ---]
 ECHO [---  Multi MP4 h264 module has been invoked                                   ---]
 ECHO [---  Preset: 420 baseline 3.0, slow, crf 24, keyfr 2 sec, Audio AAC 128       ---]
+
+SET "cmdp=%~dp0"
+SET "argp=%~dp1"
+
+IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
+	CALL "%argp%sendtoffmpeg_settings.cmd"
+	ECHO [---  Settings: LOCAL                                                          ---]
+) ELSE (
+	CALL "%cmdp%sendtoffmpeg_settings.cmd"
+	ECHO [---  Settings: GLOBAL                                                         ---]
+)
 
 IF %argCount% == 0 (
 
@@ -33,15 +41,15 @@ IF %argCount% GTR 1 (
 	ECHO [     %argCount% files queued to encode
 )
 	
-	IF %dscr% GTR 0 (SET "dscrName=_420_Baseline3") ELSE (SET "dscrName=")
+IF %dscr% GTR 0 (SET "dscrName=_420_Baseline3") ELSE (SET "dscrName=")
+
+FOR /L %%i IN (1,1,%argCount%) DO (
 	
-	FOR /L %%i IN (1,1,%argCount%) DO (
-		
-		ECHO [---------------------------------------------------------------------------------]
-		ECHO [     Transcoding %%i of %argCount%: !argVn[%%i]!
-		
-		"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -c:v libx264 -profile:v baseline -level 3.0 -pix_fmt yuv420p -preset slow -crf 24 -force_key_frames 0:00:02 -c:a aac -b:a 128k -y "!argVn[%%i]!%dscrName%.mp4"
-	)
+	ECHO [---------------------------------------------------------------------------------]
+	ECHO [     Transcoding %%i of %argCount%: !argVn[%%i]!
+	
+	"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -c:v libx264 -profile:v baseline -level 3.0 -pix_fmt yuv420p -preset slow -crf 24 -force_key_frames 0:00:02 -c:a aac -b:a 128k -y "!argVn[%%i]!%dscrName%.mp4"
+)
 
 :End
 ECHO [---------------------------------------------------------------------------------]
