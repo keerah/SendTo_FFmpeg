@@ -1,6 +1,6 @@
 @ECHO OFF
 REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
-REM Copyright (c) 2018-2019 Keerah, keerah.com. All rights reserved
+REM Copyright (c) 2018-2020 Keerah, keerah.com. All rights reserved
 REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
 
 setlocal enabledelayedexpansion
@@ -54,7 +54,7 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 	ECHO [     Encoding file %%i of %argCount%
 	ECHO [     STAGE 2: Encoding to Gif using the generatied palette                       ]
 	
-	"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -i "!argVec[%%i]!"_palette.png -filter_complex "fps=15,scale=640:-1:flags=lanczos[x];[x][1:v]paletteuse" -y "!argVec[%%i]!"%dscrName%.gif 
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -i "!argVec[%%i]!"_palette.png -filter_complex "fps=15,scale=640:-1:flags=lanczos[x];[x][1:v]paletteuse" -y "!argVec[%%i]!"%dscrName%.gif 
 	
 	IF EXIST "!argVec[%%i]!"_palette.png DEL /s "!argVec[%%i]!"_palette.png > nul
 )

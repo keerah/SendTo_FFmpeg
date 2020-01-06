@@ -15,7 +15,7 @@ for %%x in (%*) do (
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                 ---]
 ECHO [---  Multi MP4 h264 module has been invoked                                   ---]
-ECHO [---  Preset: CUDA 420 main, slow, 2 Mbps, nokeyfr, Audio aac96                ---]
+ECHO [---  Preset: 420 main 4.0, veryslow, crf 18, kf 2 sec, Audio Copy             ---]
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -41,7 +41,7 @@ IF %argCount% GTR 1 (
 	ECHO [     %argCount% files queued to encode
 )
 	
-IF %dscr% GTR 0 (SET "dscrName=_cuda420_2Mbit_aac96") ELSE (SET "dscrName=")
+IF %dscr% GTR 0 (SET "dscrName=_420_medium") ELSE (SET "dscrName=")
 
 FOR /L %%i IN (1,1,%argCount%) DO (
 	
@@ -49,8 +49,8 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 	ECHO [     Transcoding %%i of %argCount%: !argVn[%%i]!
 
 	for /F "delims=" %%f in ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argVec[%%i]!"') do echo [     Video length is: %%f
-	
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -vsync 0 -hwaccel cuvid -i "!argVec[%%i]!" -c:v h264_nvenc -profile:v main -preset slow -b:v 2M -pix_fmt yuv420p -c:a aac -b:a 96k -y "!argVn[%%i]!%dscrName%.mp4"
+
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -c:v libx264 -profile:v main -level 4.0 -preset veryslow -crf 18 -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a copy -y "!argVn[%%i]!%dscrName%.mp4"
 )
 
 :End
@@ -60,8 +60,4 @@ ECHO [--------------------------------------------------------------------------
 if %pse% GTR 0 PAUSE
 
 rem the main settings are defined in file sendtoffmpeg_settings.cmd, read the description insite it
-rem This preset uses a separate Nvidia codec h264_nvenc.
-rem For more information on the codec and its parameters refer to Nvidia's application note
-rem https://developer.nvidia.com/designworks/dl/Using_FFmpeg_with_NVIDIA_GPU_Hardware_Acceleration-pdf
-rem Just one hint from me on -b:v 10M argument, which defines the bitrate for the output.
-rem The output video will have keyframes each second due to -force_key_frames 0:00:01
+rem The output video will have keyframes each 2 seconds due to -force_key_frames 0:00:02

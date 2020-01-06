@@ -1,6 +1,6 @@
 @ECHO OFF
 REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
-REM Copyright (c) 2018-2019 Keerah, keerah.com. All rights reserved
+REM Copyright (c) 2018-2020 Keerah, keerah.com. All rights reserved
 REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
 
 setlocal enabledelayedexpansion
@@ -8,7 +8,7 @@ setlocal enabledelayedexpansion
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.03 by Keerah.com                                ---]
 ECHO [---  audio muxing module has been invoked, this preset is single file only    ---]
-ECHO [---  Preset: video copy, mux external mp3                                     ---]
+ECHO [---  Preset: Video copy, Mux external mp3 Audio                               ---]
 ECHO [---  Using external audio source file: %~n1.mp3
 
 SET "cmdp=%~dp0"
@@ -41,7 +41,9 @@ IF %1.==. (
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     Transcoding...                                                              ]
 	
-	"%ffpath%ffmpeg.exe" -v %vbl% -i %1 -i "%~n1.mp3" -codec copy -shortest -y "%~n1!%dscrName%.mp4"
+	for /F "delims=" %%f in ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argVec[%%i]!"') do echo [     Video length is: %%f
+
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i %1 -i "%~n1.mp3" -codec copy -shortest -y "%~n1!%dscrName%.mp4"
 )
 
 :End
