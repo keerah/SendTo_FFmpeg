@@ -22,8 +22,7 @@ For this you need:
 
 2. Create the shortcuts for these files (Alt drag). Place these shortcuts into **%userprofile%/SendTo** or on Windows 10 into **C:\Users\[YOUR USER NAME]\AppData\Roaming\Microsoft\Windows\SendTo**
 
-3. Rename these shortcuts to get rid of "Shortcut" in the names or to whatever you want, but do not change the **.lnk** extension.
-You can also change the icon of the shortcuts in their file properties, these icons will be displayed in the **Send To** menu.
+3. Rename these shortcuts to get rid of "Shortcut" in the names or to whatever you want, but do not change the **.lnk** extension. Now you will need to clear the "Start In" field in each of them (this lets the scripts save output files next to your sources) by right clicking one after another and selecting Properties menu. Along with it you can also change the icon of the shortcuts ("Change Icon" button in the same Properties window), these icons will be displayed in the **Send To** menu.
 
 4. So basically you just did it. Now you can right click on any file and navigate to **Send To** item.
 You'll find your new preset item there. The corresponding **.bat** file will run ffmpeg to convert it
