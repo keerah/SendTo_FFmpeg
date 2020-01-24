@@ -41,7 +41,7 @@ IF %argCount% GTR 1 (
 	ECHO [     %argCount% files queued to encode
 )
 
-IF %dscr% GTR 0 (SET "dscrName=_420_high_aac256") ELSE (SET "dscrName=")
+IF %dscr% GTR 0 (SET "dscrName=_420_crf20_aac256") ELSE (SET "dscrName=")
 
 FOR /L %%i IN (1,1,%argCount%) DO (
 	

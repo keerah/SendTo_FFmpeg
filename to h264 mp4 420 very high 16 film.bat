@@ -41,7 +41,7 @@ IF %argCount% GTR 1 (
 	ECHO [     %argCount% files queued to encode
 )
 	
-IF %dscr% GTR 0 (SET "dscrName=_420_high") ELSE (SET "dscrName=")
+IF %dscr% GTR 0 (SET "dscrName=_420_crf16") ELSE (SET "dscrName=")
 
 FOR /L %%i IN (1,1,%argCount%) DO (
 	
