@@ -15,7 +15,7 @@ for %%x in (%*) do (
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                 ---]
 ECHO [---  Multi MP4 h264 module has been invoked                                   ---]
-ECHO [---  Preset: CUDA 420, slow, 4 Mbps, keyfr 2 sec, Audio Copy              ---]
+ECHO [---  Preset: CUDA 420, slow, 4 Mbps, keyfr 2 sec, Audio Copy                  ---]
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"

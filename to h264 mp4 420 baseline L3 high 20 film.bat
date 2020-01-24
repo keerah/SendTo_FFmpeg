@@ -12,32 +12,32 @@ for %%x in (%*) do (
    set "argVn[!argCount!]=%%~nx"
 )
 
-ECHO [---------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                 ---]
-ECHO [---  Multi MP4 h264 module has been invoked                                   ---]
-ECHO [---  Preset: 420 baseline 3.0, veryslow, crf 20, FILM, kf 2 sec, Audio aac128 ---]
+ECHO [------------------------------------------------------------------------------------]
+ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                    ---]
+ECHO [---  Multi MP4 h264 module has been invoked                                      ---]
+ECHO [---  Preset: 420 L3 baseline 3.0, veryslow, crf 20, FILM, kf 2 sec, Audio aac128 ---]
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
 
 IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
 	CALL "%argp%sendtoffmpeg_settings.cmd"
-	ECHO [---  Settings: LOCAL                                                          ---]
+	ECHO [---  Settings: LOCAL                                                             ---]
 ) ELSE (
 	CALL "%cmdp%sendtoffmpeg_settings.cmd"
-	ECHO [---  Settings: GLOBAL                                                         ---]
+	ECHO [---  Settings: GLOBAL                                                            ---]
 )
 
 IF %argCount% == 0 (
 
-	ECHO [---------------------------------------------------------------------------------]
-	ECHO [     NO FILE SPECIFIED                                                           ]
+	ECHO [------------------------------------------------------------------------------------]
+	ECHO [     NO FILE SPECIFIED                                                              ]
 	GOTO End
 )
 	
 IF %argCount% GTR 1 (
 
-	ECHO [---------------------------------------------------------------------------------]
+	ECHO [------------------------------------------------------------------------------------]
 	ECHO [     %argCount% files queued to encode
 )
 	
@@ -45,7 +45,7 @@ IF %dscr% GTR 0 (SET "dscrName=_420_crf20_Baseline3") ELSE (SET "dscrName=")
 
 FOR /L %%i IN (1,1,%argCount%) DO (
 	
-	ECHO [---------------------------------------------------------------------------------]
+	ECHO [------------------------------------------------------------------------------------]
 	ECHO [     Transcoding %%i of %argCount%: !argVn[%%i]!
 
 	for /F "delims=" %%f in ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argVec[%%i]!"') do echo [     Video length is: %%f
@@ -54,9 +54,9 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 )
 
 :End
-ECHO [---------------------------------------------------------------------------------]
-ECHO [     SERVED                                                                      ]
-ECHO [---------------------------------------------------------------------------------]
+ECHO [------------------------------------------------------------------------------------]
+ECHO [     SERVED                                                                         ]
+ECHO [------------------------------------------------------------------------------------]
 if %pse% GTR 0 PAUSE
 
 rem the main settings are defined in file sendtoffmpeg_settings.cmd, read the description inside it

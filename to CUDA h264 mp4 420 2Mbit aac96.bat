@@ -15,7 +15,7 @@ for %%x in (%*) do (
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                 ---]
 ECHO [---  Multi MP4 h264 module has been invoked                                   ---]
-ECHO [---  Preset: CUDA 420 main, slow, 2 Mbps, nokeyfr, Audio aac96                ---]
+ECHO [---  Preset: CUDA 420, slow, 2 Mbps, nokeyfr, Audio aac96                     ---]
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -50,7 +50,7 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 
 	for /F "delims=" %%f in ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argVec[%%i]!"') do echo [     Video length is: %%f
 	
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -vsync 0 -hwaccel cuvid -i "!argVec[%%i]!" -c:v h264_nvenc -profile:v main -preset slow -b:v 2M -pix_fmt yuv420p -c:a aac -b:a 96k -y "!argVn[%%i]!%dscrName%.mp4"
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -vsync 0 -hwaccel cuvid -i "!argVec[%%i]!" -c:v h264_nvenc -preset slow -b:v 2M -pix_fmt yuv420p -c:a aac -b:a 96k -y "!argVn[%%i]!%dscrName%.mp4"
 )
 
 :End
