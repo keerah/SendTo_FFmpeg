@@ -43,7 +43,7 @@ IF %1.==. (
 	
 	for /F "delims=" %%f in ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argVec[%%i]!"') do echo [     Video length is: %%f
 
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -vsync 0 -hwaccel_output_format cuda -i %1 -i %~n1.wav -c:a aac -b:a 256k -shortest -c:v h264_nvenc -preset slow -b:v 40M -pix_fmt yuv420p -force_key_frames 0:00:02 -y %~n1%dscrName%.mp4
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -vsync 0 -hwaccel cuda -hwaccel_output_format cuda -i %1 -i %~n1.wav -c:a aac -b:a 256k -shortest -c:v h264_nvenc -preset slow -b:v 40M -pix_fmt yuv420p -force_key_frames 0:00:02 -y %~n1%dscrName%.mp4
 )
 
 :End

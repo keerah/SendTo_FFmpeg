@@ -50,7 +50,7 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 
 	for /F "delims=" %%f in ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argVec[%%i]!"') do echo [     Video length is: %%f
 	
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -vsync 0 -hwaccel_output_format cuda -i "!argVec[%%i]!" -c:v h264_nvenc -preset slow -b:v 4M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a copy -y "!argVn[%%i]!%dscrName%.mp4"
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -vsync 0 -hwaccel cuda -hwaccel_output_format cuda -i "!argVec[%%i]!" -c:v h264_nvenc -preset slow -b:v 4M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a copy -y "!argVn[%%i]!%dscrName%.mp4"
 )
 
 :End
