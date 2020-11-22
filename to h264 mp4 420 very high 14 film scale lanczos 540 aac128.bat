@@ -15,7 +15,7 @@ for %%x in (%*) do (
 ECHO [---------------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                       ---]
 ECHO [---  Multi MP4 h264 module has been invoked                                         ---]
-ECHO [---  Preset: 420, veryslow, crf 14, scale lanczos 540p, FILM, kf 2 sec, Audio aac128---]
+ECHO [---  Preset: 420, veryslow, crf 16, scale lanczos 540p, FILM, kf 2 sec, Audio aac128---]
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -50,7 +50,7 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 
 	for /F "delims=" %%f in ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argVec[%%i]!"') do echo [     Video length is: %%f
 
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -c:v libx264 -preset veryslow -crf 14 -pix_fmt yuv420p -vf scale=-1:540 -sws_flags lanczos -tune film -force_key_frames 0:00:02 -c:a aac -b:a 128k -y "!argVn[%%i]!%dscrName%.mp4"
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -c:v libx264 -preset veryslow -crf 16 -pix_fmt yuv420p -vf scale=-1:540 -sws_flags lanczos -tune film -force_key_frames 0:00:02 -c:a aac -b:a 128k -y "!argVn[%%i]!%dscrName%.mp4"
 )
 
 :End
