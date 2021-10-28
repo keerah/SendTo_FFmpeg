@@ -1,12 +1,12 @@
 @ECHO OFF
 REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
-REM Copyright (c) 2018-2020 Keerah, keerah.com. All rights reserved
+REM Copyright (c) 2018-2021 Keerah, keerah.com. All rights reserved
 REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
 
 setlocal enabledelayedexpansion
 
 ECHO [---------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v1.03 by Keerah.com                                ---]
+ECHO [---  SendTo FFmpeg encoder v2.13 by Keerah.com                                ---]
 ECHO [---  MP4 h264 module has been invoked, this preset is single file only        ---]
 ECHO [---  Preset: CUDA 420, slow, 40 Mbps, kf 2 sec, External Audio to aac256      ---]
 ECHO [---  Using external audio source file: %~n1.wav
@@ -43,7 +43,7 @@ IF %1.==. (
 	
 	for /F "delims=" %%f in ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argVec[%%i]!"') do echo [     Video length is: %%f
 
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -vsync 0 -hwaccel cuda -hwaccel_output_format cuda -i %1 -i "%~n1.wav" -c:a aac -b:a 256k -shortest -c:v h264_nvenc -preset slow -b:v 40M -pix_fmt yuv420p -force_key_frames 0:00:02 -y "%~n1%dscrName%.mp4"
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i %1 -i "%~n1.wav" -c:a aac -b:a 256k -shortest -c:v h264_nvenc -preset slow -b:v 40M -pix_fmt yuv420p -force_key_frames 0:00:02 -y "%~n1%dscrName%.mp4"
 )
 
 :End

@@ -1,6 +1,6 @@
 @ECHO OFF
 REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
-REM Copyright (c) 2018-2020 Keerah, keerah.com. All rights reserved
+REM Copyright (c) 2018-2021 Keerah, keerah.com. All rights reserved
 REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
 
 setlocal enabledelayedexpansion
@@ -12,7 +12,7 @@ for %%x in (%*) do (
 )
 
 ECHO [---------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v1.15 by Keerah.com                                ---]
+ECHO [---  SendTo FFmpeg encoder v2.2 by Keerah.com                                ---]
 ECHO [---  Multi GIF module has been invoked                                        ---]
 ECHO [---  Preset: 15 fps, 420px, 2 pass                                            ---]
 

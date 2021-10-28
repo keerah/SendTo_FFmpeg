@@ -14,7 +14,7 @@ for %%x in (%*) do (
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v2.2 by Keerah.com                                ---]
 ECHO [---  Multi GIF module has been invoked                                        ---]
-ECHO [---  Preset: 30 fps, 304px, 2 pass                                            ---]
+ECHO [---  Preset: 10 fps, 640px, 16 colors, 2 pass                                 ---]
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -40,7 +40,7 @@ IF %argCount% GTR 1 (
 	ECHO [     %argCount% files queued to encode
 )
 	
-IF %dscr% GTR 0 (SET "dscrName=_hq304gif") ELSE (SET "dscrName=")
+IF %dscr% GTR 0 (SET "dscrName=_hqgif") ELSE (SET "dscrName=")
 
 FOR /L %%i IN (1,1,%argCount%) DO (
 	
@@ -48,15 +48,13 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 	ECHO [     Encoding file %%i of %argCount%
 	ECHO [     STAGE 1: Generating a palette                                               ]
 	
-	"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -vf "fps=10,scale=616:-1:flags=lanczos,palettegen=max_colors=32:stats_mode=full" -y "!argVec[%%i]!"_palette.png  
+	"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -vf fps=10,scale=640:-1:flags=lanczos,palettegen=max_colors=16:stats_mode=full -y "!argVec[%%i]!"_palette.png  
 	
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     Encoding file %%i of %argCount%
 	ECHO [     STAGE 2: Encoding to Gif using the generatied palette                       ]
 	
-	rem dither "bayer","heckbert","floyd_steinberg","sierra2","sierra2_4a"
-	
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -i "!argVec[%%i]!"_palette.png -filter_complex "fps=10,scale=616:-1:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=3" -y "!argVec[%%i]!"%dscrName%.gif 
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -i "!argVec[%%i]!"_palette.png -filter_complex "fps=10,scale=640:-1:flags=lanczos[x];[x][1:v]paletteuse" -y "!argVec[%%i]!"%dscrName%.gif 
 	
 	IF EXIST "!argVec[%%i]!"_palette.png DEL /s "!argVec[%%i]!"_palette.png > nul
 )

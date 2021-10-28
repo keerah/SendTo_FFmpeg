@@ -1,6 +1,6 @@
 @ECHO OFF
 REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
-REM Copyright (c) 2018-2020 Keerah, keerah.com. All rights reserved
+REM Copyright (c) 2018-2021 Keerah, keerah.com. All rights reserved
 REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
 
 setlocal enabledelayedexpansion
@@ -13,7 +13,7 @@ for %%x in (%*) do (
 )
 
 ECHO [---------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v1.1 by Keerah.com                                 ---]
+ECHO [---  SendTo FFmpeg encoder v2.2 by Keerah.com                                 ---]
 ECHO [---  Multi MP4 h264 module has been invoked                                   ---]
 ECHO [---  Preset: CUDA 420, slow, 10 Mbps, kf 2 sec, Audio aac128                  ---]
 
@@ -50,7 +50,7 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 
 	for /F "delims=" %%f in ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argVec[%%i]!"') do echo [     Video length is: %%f
 	
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -vsync 0 -hwaccel cuda -hwaccel_output_format cuda -i "!argVec[%%i]!" -c:v h264_nvenc -preset slow -b:v 10M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a aac -b:a 128k -y "!argVn[%%i]!%dscrName%.mp4"
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -c:v h264_nvenc -preset slow -b:v 10M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a aac -b:a 128k -y "!argVn[%%i]!%dscrName%.mp4"
 )
 
 :End

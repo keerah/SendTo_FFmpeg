@@ -1,5 +1,5 @@
 REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
-REM Copyright (c) 2018-2019 Keerah, keerah.com. All rights reserved
+REM Copyright (c) 2018-2021 Keerah, keerah.com. All rights reserved
 REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
 
 REM SendTo_FFmpeg settings file

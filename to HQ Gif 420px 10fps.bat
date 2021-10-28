@@ -1,6 +1,6 @@
 @ECHO OFF
 REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
-REM Copyright (c) 2018-2020 Keerah, keerah.com. All rights reserved
+REM Copyright (c) 2018-2021 Keerah, keerah.com. All rights reserved
 REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
 
 setlocal enabledelayedexpansion
@@ -12,7 +12,7 @@ for %%x in (%*) do (
 )
 
 ECHO [---------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v1.15 by Keerah.com                                ---]
+ECHO [---  SendTo FFmpeg encoder v2.2 by Keerah.com                                ---]
 ECHO [---  Multi GIF module has been invoked                                        ---]
 ECHO [---  Preset: 10 fps, 420px, 2 pass                                            ---]
 
@@ -54,7 +54,7 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 	ECHO [     Encoding file %%i of %argCount%
 	ECHO [     STAGE 2: Encoding to Gif using the generatied palette                       ]
 	
-	"%ffpath%ffmpeg.exe" -v %vbl% -i -hide_banner -stats "!argVec[%%i]!" -i "!argVec[%%i]!"_palette.png -filter_complex "fps=10,scale=420:-1:flags=lanczos[x];[x][1:v]paletteuse" -y "!argVec[%%i]!"%dscrName%.gif 
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -i "!argVec[%%i]!"_palette.png -filter_complex "fps=10,scale=420:-1:flags=lanczos[x];[x][1:v]paletteuse" -y "!argVec[%%i]!"%dscrName%.gif 
 	
 	IF EXIST "!argVec[%%i]!"_palette.png DEL /s "!argVec[%%i]!"_palette.png > nul
 )
