@@ -1,5 +1,5 @@
-# SendTo_FFmpeg
-This is a set of Windows **batch** scripts for effortless converting/transcoding videos using the free **FFmpeg** tool. It is a set of tools I develop mainly for myself and it saves me tons of time in every day work.
+# Description
+This is a set of Windows **batch** scripts for effortless transcoding videos using the free **FFmpeg** tool. It is a set of tools I develop mainly for myself and it saves me tons of time in every day work.
 
 ![menu img](https://i.imgur.com/1SOp2wO.png "SendTo_FFmpeg presets in the standard windows Send To menu")
 
@@ -7,13 +7,14 @@ Click "Clone or donwload" on this page to get all the scripts, its free forever.
 First you need to download **FFmpeg** itself from [here](https://www.ffmpeg.org/download.html), it's free.
 Install it (extract), by default its path is **c:\Program Files\ffmpeg**. If you install it into a different path than this, you will need to edit the path to **FFmpeg.exe** in the main settings file **sendtoffmpeg_settings.cmd**. There're more parameters inside with description.
 
+# Usage
 You can use these batches in a few different ways:
 
-## 1st way
+## Drag-n-drop
 Just drag your video over the corresponding **.bat** file icon.
 You can drag files one by one, each will be encoded in a separate process, you can also select multiple files for any script except a few which mux external audio.
 
-## 2nd way (how I use it)
+## Windows explorer's Send To menu
 You can integrate these batches as commands into Windows' **Send To** menu (right click on any file in the Explorer).
 
 For this you need:
@@ -28,14 +29,12 @@ For this you need:
 You'll find your new preset item there. The corresponding **.bat** file will run ffmpeg to convert it
 and then will place the result into same folder with something like **_420_high.mp4** added to your filename.
 
-## 3rd way
+## Shell
 
 Use it in CMD or Powershell as usual.
 
-## Notes
+# Notes
 
-This works with Windows OS only. If you're on a Mac you can reuse the FFmpeg parameters from these scripts to create your scripts.
+This works with Windows OS only. 
 
-Each batch has a brief description of its functionality inside. SendTo_FFmpeg has its global settings: Path to FFmpeg, FFmpeg verbosity level,pause after encoding, and descriptive naming. They affect all batches at once. You can change them by editing **sendtoffmpeg_settings.cmd**, their brief description is inside the file. If you put a copy of **sendtoffmpeg_settings.cmd** into the folder with your source video files the scripts will use these settings instead of the global, this lets you use different settings for different folders.
-
-You can visit my [blog](https://keeraah.blogspot.com/2018/02/ffmpeg-lifehack-1.html) for more info. I update this batch set regularly.
+Each batch has a brief description of its functionality inside. SendTo_FFmpeg has its global settings: Path to FFmpeg, FFmpeg verbosity level, pause after encoding, and descriptive naming. They affect all batches at once. You can change them by editing **sendtoffmpeg_settings.cmd**, their brief description is inside the file. If you put a copy of **sendtoffmpeg_settings.cmd** into the folder with your source video files, the scripts will use these settings instead of the globals, this lets you use different settings for different folders.
