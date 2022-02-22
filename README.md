@@ -1,5 +1,5 @@
 # Description
-This is a set of Windows **batch** scripts for effortless transcoding videos using the free **FFmpeg** tool. It is a set of tools I develop mainly for myself and it saves me tons of time in every day work.
+This is a set of Windows **batch** scripts for effortless video transcoding using the free **FFmpeg** tool. This is a set of tools I develop mainly for myself and it saves me tons of time in every day work.
 
 ![menu img](https://i.imgur.com/1SOp2wO.png "SendTo_FFmpeg presets in the standard windows Send To menu")
 
@@ -25,7 +25,7 @@ For this you need:
 
 3. Rename these shortcuts to get rid of "Shortcut" in the names or to whatever you want, but do not change the **.lnk** extension. Now you will need to clear the "Start In" field in each of them (this lets the scripts save output files next to your sources) by right clicking one after another and selecting Properties menu. Along with it you can also change the icon of the shortcuts ("Change Icon" button in the same Properties window), these icons will be displayed in the **Send To** menu.
 
-4. So basically you just did it. Now you can right click on any file and navigate to **Send To** item.
+That's all. Now you can right click on any file and navigate to **Send To** item.
 You'll find your new preset item there. The corresponding **.bat** file will run ffmpeg to convert it
 and then will place the result into same folder with something like **_420_high.mp4** added to your filename.
 
@@ -37,4 +37,15 @@ Use it in CMD or Powershell as usual.
 
 This works with Windows OS only. 
 
-Each batch has a brief description of its functionality inside. SendTo_FFmpeg has its global settings: Path to FFmpeg, FFmpeg verbosity level, pause after encoding, and descriptive naming. They affect all batches at once. You can change them by editing **sendtoffmpeg_settings.cmd**, their brief description is inside the file. If you put a copy of **sendtoffmpeg_settings.cmd** into the folder with your source video files, the scripts will use these settings instead of the globals, this lets you use different settings for different folders.
+Each batch has a brief description of its functionality inside.
+
+SendTo_FFmpeg has its global settings:
+
+- Path to FFmpeg
+- FFmpeg verbosity level
+- Pause after encoding
+- Descriptive naming
+
+They affect all batches at once. You can change them by editing **sendtoffmpeg_settings.cmd**, their brief description is inside the file.
+
+If you put a copy of **sendtoffmpeg_settings.cmd** into the folder with your source video files, the scripts will use these settings instead of the globals, this lets you use different settings for different folders.
