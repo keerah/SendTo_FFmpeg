@@ -1,7 +1,7 @@
 # Description
 This is a set of Windows **batch** scripts for effortless video transcoding using the free **FFmpeg** tool. This is a set of tools I develop mainly for myself and it saves me tons of time in every day work.
 
-![menu img](https://i.imgur.com/1SOp2wO.png "SendTo_FFmpeg presets in the standard windows Send To menu")
+![send_to_ffmpeg](https://user-images.githubusercontent.com/9025818/155185990-32fec47d-e557-4a2f-a412-49f2f9a57f3d.jpg "SendTo_FFmpeg presets in the Windows Explorer's Send To menu")
 
 Click "Clone or donwload" on this page to get all the scripts, its free forever.
 First you need to download **FFmpeg** itself from [here](https://www.ffmpeg.org/download.html), it's free.
