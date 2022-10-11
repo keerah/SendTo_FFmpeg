@@ -3,9 +3,11 @@ This is a set of Windows **batch** scripts for effortless video transcoding usin
 
 ![send_to_ffmpeg](https://user-images.githubusercontent.com/9025818/155185990-32fec47d-e557-4a2f-a412-49f2f9a57f3d.jpg "SendTo_FFmpeg presets in the Windows Explorer's Send To menu")
 
-Click "Clone or donwload" on this page to get all the scripts, its free forever.
-First you need to download **FFmpeg** itself from [here](https://www.ffmpeg.org/download.html), it's free.
-Install it (extract), by default its path is **c:\Program Files\ffmpeg**. If you install it into a different path than this, you will need to edit the path to **FFmpeg.exe** in the main settings file **sendtoffmpeg_settings.cmd**. There're more parameters inside with description.
+First click "Clone or donwload" on this page or downlad from the [releases page](https://github.com/keerah/SendTo_FFmpeg/releases) to get all the scripts, its free forever.
+
+Thent you will need to [download the FFmpeg executables](https://ffmpeg.org/download.html#build-windows), it's free.
+
+By default these scripts assume the path to FFmpeg.exe is **c:\Program Files\ffmpeg\bin**, so you can simply extract the downloaded ffmpeg archiveinto **c:\Program Files\ffmpeg**. If you install it into a different path, you will need to edit the path to **FFmpeg.exe** in the main settings file **sendtoffmpeg_settings.cmd**.
 
 # Usage
 You can use these batches in a few different ways:
@@ -21,17 +23,20 @@ For this you need:
 
 1. Put all of these batches to any convenient location (I use my cloud sync folder to have these presets on all machines). Find the file named **sendtoffmpeg_settings.cmd** and edit it to change the path to **FFmpeg** installation if it's different from **c:\Program Files\ffmpeg**. You can also change here a few other settings for all scripts at once.
 
-2. Create the shortcuts for these files (Alt drag). Place these shortcuts into **%userprofile%/SendTo** or on Windows 10 into **C:\Users\[YOUR USER NAME]\AppData\Roaming\Microsoft\Windows\SendTo**
+2. Create the shortcuts for these files (Alt-drag them onto your Desctop for example). Then place these shortcuts into **C:\Users\[YOUR USER NAME]\AppData\Roaming\Microsoft\Windows\SendTo** folder.
 
-3. Rename these shortcuts to get rid of "Shortcut" in the names or to whatever you want, but do not change the **.lnk** extension. Now you will need to clear the "Start In" field in each of them (this lets the scripts save output files next to your sources) by right clicking one after another and selecting Properties menu. Along with it you can also change the icon of the shortcuts ("Change Icon" button in the same Properties window), these icons will be displayed in the **Send To** menu.
+3. Now you may want to rename these shortcuts to get rid of "Shortcut" in the names or to whatever you want, but do not change the **.lnk** extension. Then you have to clear the "Start In" field in each of shortcut properties (this lets the scripts save output files next to your sources) by right clicking one after another and selecting Properties menu. Along with it you can also change the icon of the shortcuts ("Change Icon" button in the same Properties window), these icons will be displayed in the **Send To** menu.
 
-That's all. Now you can right click on any file and navigate to **Send To** item.
-You'll find your new preset item there. The corresponding **.bat** file will run ffmpeg to convert it
-and then will place the result into same folder with something like **_420_high.mp4** added to your filename.
+That's all. You can right click on any file and navigate to **Send To**. You'll find your new preset items there. The corresponding **.bat** file will run ffmpeg to convert it and then will place the result into same folder with something like **_420_high.mp4** added to your filename.
 
 ## Shell
 
 Use it in CMD or Powershell as usual.
+
+# FFmpeg versions
+
+Currently there's some kind of palette generation incompatibility (required for GIFs) with FFmpeg version 5+ branches.
+While I am investigating this I recommend using the latest version 4+ branch instead. [These of version 4.4.3](https://github.com/BtbN/FFmpeg-Builds/releases/tag/autobuild-2022-10-10-12-40) for example.
 
 # Notes
 
