@@ -48,7 +48,7 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     Converting %%i of %argCount%: !argVn[%%i]!
 
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -i "!argVec[%%i]!" --vf "scale=in_range=mpeg:out_range=full" -q:v 6 -y "!argVn[%%i]!%dscrName%_%%04d.jpg"
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -i "!argVec[%%i]!" -vf "scale=in_range=mpeg:out_range=full" -q:v 6 -y "!argVn[%%i]!%dscrName%_%%04d.jpg"
 )
 
 :End

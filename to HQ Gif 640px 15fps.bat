@@ -65,11 +65,9 @@ ECHO [     SERVED                                                               
 ECHO [---------------------------------------------------------------------------------]
 IF %pse% GTR 0 PAUSE
 
-rem the main settings are defined in file sendtoffmpeg_settings.cmd, read the description inside it
 rem This script creates high quality GIFs and supports multiple file selection at once (processes them in queue)
-rem All videos rescaled to 540 pixels and stripped to 15 fps. The script doesn't have alpha channel support yet though.
-rem You can change frame rate changing fps=15 value to your preference, just do it in both FFmpeg command lines.
-rem The output file will be saved to the same folder your source comes from.
-rem The script works in 2 stages (2 pass encoding). First one scans the source and creates a colour palette of it to minimise your Gif size.
-rem And the second pass creates the Gif itself. 
+rem the main settings are defined in file sendtoffmpeg_settings.cmd, read the description inside of it
+rem There's no alpha channel support yet. The output file will be saved to the same folder your source comes from.
+rem You can change the frame rate/resolution by changing fps=XX/scale=XXX values to your preference, just do it in both FFmpeg command lines.
+rem The script works in 2 stages (2 pass encoding). First one scans the source and creates a colour palette of it to minimise your Gif size. And the second pass creates the Gif itself.
 rem To encode just a piece of your source video add to command parameters something like -ss 12:23 -t 35 where -ss is start time and -t is duration

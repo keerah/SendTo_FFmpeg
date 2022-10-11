@@ -12,9 +12,9 @@ for %%x in (%*) do (
 )
 
 ECHO [---------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v2.2 by Keerah.com                                ---]
+ECHO [---  SendTo FFmpeg encoder v2.2 by Keerah.com                                 ---]
 ECHO [---  Multi GIF module has been invoked                                        ---]
-ECHO [---  Preset: 10 fps, 640px, 32 colors, 2 pass                                 ---]
+ECHO [---  Preset: 15 fps, 640px, 64 colors, 2 pass                                 ---]
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -48,13 +48,13 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 	ECHO [     Encoding file %%i of %argCount%
 	ECHO [     STAGE 1: Generating a palette                                               ]
 	
-	"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -vf "fps=10,scale=640:-1:flags=lanczos,palettegen=max_colors=32" -y "!argVec[%%i]!"_palette.png  
+	"%ffpath%ffmpeg.exe" -v %vbl% -i "!argVec[%%i]!" -vf "fps=15,scale=640:-1:flags=lanczos,palettegen=max_colors=64" -y "!argVec[%%i]!"_palette.png  
 	
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     Encoding file %%i of %argCount%
 	ECHO [     STAGE 2: Encoding to Gif using the generatied palette                       ]
 	
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -i "!argVec[%%i]!"_palette.png -filter_complex "fps=10,scale=640:-1:flags=lanczos[x];[x][1:v]paletteuse" -y "!argVec[%%i]!"%dscrName%.gif 
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -i "!argVec[%%i]!"_palette.png -filter_complex "fps=15,scale=640:-1:flags=lanczos[x];[x][1:v]paletteuse" -y "!argVec[%%i]!"%dscrName%.gif 
 	
 	IF EXIST "!argVec[%%i]!"_palette.png DEL /s "!argVec[%%i]!"_palette.png > nul
 )

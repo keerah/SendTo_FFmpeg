@@ -15,10 +15,10 @@ for %%x in (%*) do (
 ECHO [---------------------------------------------------------------------------------]
 ECHO [---  SendTo FFmpeg encoder v2.2 by Keerah.com                                 ---]
 ECHO [---  Multi MP4 h264 module has been invoked                                   ---]
-ECHO [---  Preset: 420 baseline 3.0, veryslow, crf 20, FILM, kf 2 sec, Audio aac128 ---]
+ECHO [---  Preset: 420, veryslow, crf 25, FILM, kf 2 sec, Audio aac192              ---]
 
-SET "cmdp=%~dp0"
-SET "argp=%~dp1"
+set "cmdp=%~dp0"
+set "argp=%~dp1"
 
 IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
 	CALL "%argp%sendtoffmpeg_settings.cmd"
@@ -40,8 +40,8 @@ IF %argCount% GTR 1 (
 	ECHO [---------------------------------------------------------------------------------]
 	ECHO [     %argCount% files queued to encode
 )
-	
-IF %dscr% GTR 0 (SET "dscrName=_420_crf20_Baseline3") ELSE (SET "dscrName=")
+
+IF %dscr% GTR 0 (SET "dscrName=_420_crf20_aac256") ELSE (SET "dscrName=")
 
 FOR /L %%i IN (1,1,%argCount%) DO (
 	
@@ -50,17 +50,15 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 
 	for /F "delims=" %%f in ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argVec[%%i]!"') do echo [     Video length is: %%f
 
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -c:v libx264 -profile:v baseline -level 3.0 -pix_fmt yuv420p -tune film -preset veryslow -crf 20 -force_key_frames 0:00:02 -c:a aac -b:a 128k -y "!argVn[%%i]!%dscrName%.mp4"
+	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -c:v libx264 -preset veryslow -crf 25 -pix_fmt yuv420p -tune film -force_key_frames 0:00:02 -c:a aac -b:a 192k -y "!argVn[%%i]!%dscrName%.mp4"
 )
 
 :End
 ECHO [---------------------------------------------------------------------------------]
 ECHO [     SERVED                                                                      ]
 ECHO [---------------------------------------------------------------------------------]
+
 if %pse% GTR 0 PAUSE
 
 rem the main settings are defined in file sendtoffmpeg_settings.cmd, read the description inside it
 rem The output video will have keyframes each 2 seconds due to -force_key_frames 0:00:02
-rem This batch encodes to a very strict (very compatible) Baseline v3.0 profile 
-rem It also reencodes the audio to 128 kbps AAC to guarantee full compatibility to virtually any player
-rem If you need more info on encoding then change verbose level -v command from -v warning to -v info.
