@@ -1,68 +1,67 @@
 @ECHO OFF
-REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
-REM Copyright (c) 2018-2021 Keerah, keerah.com. All rights reserved
-REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
+REM SendTo_FFmpeg is a set of windows batches for effortless transcoding
+REM Download from https://github.com/keerah/SendTo_FFmpeg
 
 setlocal enabledelayedexpansion
 
-set argCount=0
-for %%x in (%*) do (
-   set /A argCount+=1
-   set "argVec[!argCount!]=%%~x"
-   set "argVn[!argCount!]=%%~nx"
+SET argCount=0
+FOR %%f IN (%*) DO (
+   SET /A argCount+=1
+   SET "argFile[!argCount!].name=%%~f"
+   SET "argFile[!argCount!].trname=%%~nf"
+   SET "argFile[!argCount!].ext=%%~xf"
+   SET "argFile[!argCount!].path=%%~dpf"
 )
 
-ECHO [---------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v2.2 by Keerah.com                                 ---]
-ECHO [---  Multi MP4 h264 module has been invoked                                   ---]
-ECHO [---  Preset: CUDA 420, slow, 20 Mbps, kf 2 sec, Audio aac192                  ---]
+IF %argCount% LEQ 0 (
+	ECHO [----------------------------------------------------------------------------------------]
+	ECHO [     NO FILE^(S^) SPECIFIED                                                               ]
+	GOTO :End
+)
+
+ECHO [----------------------------------------------------------------------------------------]
+ECHO [---  SendTo FFmpeg encoder v3.0 by Keerah                                            ---]
+ECHO [---  Preset: h264 mp4 CUDA 420, slow, 20 Mbps, kf 2 sec, Audio aac192                ---]
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
 
+REM get settings
 IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
 	CALL "%argp%sendtoffmpeg_settings.cmd"
-	ECHO [---  Settings: LOCAL                                                          ---]
+	ECHO [---  Settings: *LOCAL*, Verbosity: !vbl!
 ) ELSE (
-	CALL "%cmdp%sendtoffmpeg_settings.cmd"
-	ECHO [---  Settings: GLOBAL                                                         ---]
+	IF EXIST "%cmdp%sendtoffmpeg_settings.cmd" (
+		CALL "%cmdp%sendtoffmpeg_settings.cmd"
+		ECHO [---  Settings: Global, Verbosity: !vbl!
+	) ELSE (
+		ECHO [---  Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!       ---]	
+		GOTO :End
+	)
 )
 
-IF %argCount% == 0 (
-
-	ECHO [---------------------------------------------------------------------------------]
-	ECHO [     NO FILE SPECIFIED                                                           ]
-	GOTO End
-)
-	
-IF %argCount% GTR 1 (
-
-	ECHO [---------------------------------------------------------------------------------]
-	ECHO [     %argCount% files queued to encode
+REM Check for ffmpeg
+IF NOT EXIST "%ffpath%ffmpeg.exe" ( 
+	ECHO [---      Sorry, the path to ffmpeg.exe is unreacheable. Unable to continue!          ---]
+	GOTO :End
 )
 
-IF %dscr% GTR 0 (SET "dscrName=_cuda420_20Mbit_aac192") ELSE (SET "dscrName=")
 
-FOR /L %%i IN (1,1,%argCount%) DO (
-	
-	ECHO [---------------------------------------------------------------------------------]
-	ECHO [     Transcoding %%i of %argCount%: !argVn[%%i]!
+REM compression settings
+SET "wset.params=-v %vbl% -hide_banner -stats"
+SET "wset.videocomp=-c:v h264_nvenc -preset slow -b:v 20M -pix_fmt yuv420p -force_key_frames 0:00:02"
+	REM The output video will have keyframes each 2 seconds due to -force_key_frames 0:00:02
+SET "wset.audiocomp=-c:a aac -b:a 192k"
+IF %quietover% == 1 (SET "wset.over=-y") ELSE (SET "wset.over=")
+IF %dscr% GTR 0 (SET "wset.dscr=_420_cuda_20Mbit_aac192") ELSE (SET "wset.dscr=")
+SET "wset.suff=!wset.dscr!.mp4"
 
-	for /F "delims=" %%f in ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argVec[%%i]!"') do echo [     Video length is: %%f
-
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i "!argVec[%%i]!" -c:v h264_nvenc -preset slow -b:v 20M -pix_fmt yuv420p -force_key_frames 0:00:02 -c:a aac -b:a 192k -y "!argVn[%%i]!%dscrName%.mp4"
+IF EXIST "%cmdp%sendtoffmpeg_encoder01.cmd" (
+	CALL "%cmdp%sendtoffmpeg_encoder01.cmd"
+) ELSE (
+	ECHO [---  Sorry, the sendtoffmpeg_encoder01.cmd is unreacheable. Unable to continue!      ---]
+	GOTO :End
 )
 
 :End
-ECHO [---------------------------------------------------------------------------------]
-ECHO [     SERVED                                                                      ]
-ECHO [---------------------------------------------------------------------------------]
-
 if %pse% GTR 0 PAUSE
-
-rem the main settings are defined in file sendtoffmpeg_settings.cmd, read the description insite it
-rem This preset uses a separate Nvidia codec h264_nvenc.
-rem For more information on the codec and its parameters refer to Nvidia's application note
-rem https://developer.nvidia.com/designworks/dl/Using_FFmpeg_with_NVIDIA_GPU_Hardware_Acceleration-pdf
-rem Just one hint from me on -b:v 20M argument, which defines the bitrate for the output.
-rem The output video will have keyframes each 2 seconds due to -force_key_frames 0:00:02

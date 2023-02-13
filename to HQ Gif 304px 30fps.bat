@@ -20,8 +20,8 @@ IF %argCount% LEQ 0 (
 )
 
 ECHO [----------------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v3.0 by Keerah                                            ---]
-ECHO [---  Preset: Gif 256 colors, 120px width, 10 fps, 2 pass                             ---]
+ECHO [---  SendTo FFmpeg encoder v3.0 by Keerah.com                                        ---]
+ECHO [---  Preset: Gif 256 colors, 304px width, 30 fps, 2 pass, sierra2_4a                 ---]
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -50,13 +50,13 @@ IF NOT EXIST "%ffpath%ffmpeg.exe" (
 REM compression settings
 SET "wset.fps=10"
 SET "wset.params=-v %vbl% -hide_banner -stats"
-SET "wset.prepass=-vf "fps=10,scale=120:-1:flags=lanczos,palettegen""
-SET "wset.videocomp=-filter_complex "fps=10,scale=120:-1:flags=lanczos[x];[x][1:v]paletteuse""
+SET "wset.prepass=-vf "fps=30,scale=304:-1:flags=lanczos,palettegen=max_colors=128:stats_mode=full""
+SET "wset.videocomp=-filter_complex "fps=30,scale=304:-1:flags=lanczos[x];[x][1:v]paletteuse=dither=sierra2_4a""
 	REM There's no alpha channel support yet. The output file will be saved to the same folder your source comes from.
 	REM You can change the frame rate/resolution by changing fps=XX/scale=XXX values to your preference, just do it in both FFmpeg command lines.
 SET "wset.audiocomp="
 IF %quietover% == 1 (SET "wset.over=-y") ELSE (SET "wset.over=")
-IF %dscr% GTR 0 (SET "wset.dscr=_hqgif256_120_10") ELSE (SET "wset.dscr=")
+IF %dscr% GTR 0 (SET "wset.dscr=_hqgif256_304_30") ELSE (SET "wset.dscr=")
 SET "wset.suff=!wset.dscr!.gif"
 SET "wset.seqfrout=-update 1 -frames:v 1" 
 

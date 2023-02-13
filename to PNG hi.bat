@@ -1,59 +1,66 @@
 @ECHO OFF
-REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
-REM Copyright (c) 2018-2022 Keerah, keerah.com. All rights reserved
-REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
+REM SendTo_FFmpeg is a set of windows batches for effortless transcoding
+REM Download from https://github.com/keerah/SendTo_FFmpeg
 
 setlocal enabledelayedexpansion
 
-set argCount=0
-for %%x in (%*) do (
-   set /A argCount+=1
-   set "argVec[!argCount!]=%%~x"
-   set "argVn[!argCount!]=%%~nx"
+SET argCount=0
+FOR %%f IN (%*) DO (
+   SET /A argCount+=1
+   SET "argFile[!argCount!].name=%%~f"
+   SET "argFile[!argCount!].trname=%%~nf"
+   SET "argFile[!argCount!].ext=%%~xf"
+   SET "argFile[!argCount!].path=%%~dpf"
 )
 
-ECHO [---------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v2.3 by Keerah.com                                 ---]
-ECHO [---  Multi PNG module has been invoked                                        ---]
-ECHO [---  Preset: PNG, compression 0                                               ---]
+IF %argCount% LEQ 0 (
+	ECHO [----------------------------------------------------------------------------------------]
+	ECHO [     NO FILE^(S^) SPECIFIED                                                               ]
+	GOTO :End
+)
 
-set "cmdp=%~dp0"
-set "argp=%~dp1"
+ECHO [----------------------------------------------------------------------------------------]
+ECHO [---  SendTo FFmpeg encoder v3.0 by Keerah                                            ---]
+ECHO [---  Preset: PNG, compression 0                                                      ---]
 
+SET "cmdp=%~dp0"
+SET "argp=%~dp1"
+
+REM get settings
 IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
 	CALL "%argp%sendtoffmpeg_settings.cmd"
-	ECHO [---  Settings: LOCAL                                                          ---]
+	ECHO [---  Settings: *LOCAL*, Verbosity: !vbl!
 ) ELSE (
-	CALL "%cmdp%sendtoffmpeg_settings.cmd"
-	ECHO [---  Settings: GLOBAL                                                         ---]
+	IF EXIST "%cmdp%sendtoffmpeg_settings.cmd" (
+		CALL "%cmdp%sendtoffmpeg_settings.cmd"
+		ECHO [---  Settings: Global, Verbosity: !vbl!
+	) ELSE (
+		ECHO [---  Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!       ---]	
+		GOTO :End
+	)
 )
 
-IF %argCount% == 0 (
-
-	ECHO [---------------------------------------------------------------------------------]
-	ECHO [     NO FILE SPECIFIED                                                           ]
-	GOTO End
-)
-	
-IF %argCount% GTR 1 (
-
-	ECHO [---------------------------------------------------------------------------------]
-	ECHO [     %argCount% files queued to encode
+REM Check for ffmpeg
+IF NOT EXIST "%ffpath%ffmpeg.exe" ( 
+	ECHO [---      Sorry, the path to ffmpeg.exe is unreacheable. Unable to continue!          ---]
+	GOTO :End
 )
 
-IF %dscr% GTR 0 (SET "dscrName=_pnghigh") ELSE (SET "dscrName=") 
 
-FOR /L %%i IN (1,1,%argCount%) DO (
-	
-	ECHO [---------------------------------------------------------------------------------]
-	ECHO [     Converting %%i of %argCount%: !argVn[%%i]!
+REM compression settings
+SET "wset.params=-v %vbl% -hide_banner -stats"
+SET "wset.videocomp=-compression_level 0"
+SET "wset.audiocomp="
+IF %quietover% == 1 (SET "wset.over=-y") ELSE (SET "wset.over=")
+IF %dscr% GTR 0 (SET "wset.dscr=_pnghigh") ELSE (SET "wset.dscr=")
+SET "wset.suff=!wset.dscr!_%%0!frcounter!d.png"
 
-	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -i "!argVec[%%i]!" -compression_level 0 -y "!argVn[%%i]!%dscrName%.png"
+IF EXIST "%cmdp%sendtoffmpeg_encoder01.cmd" (
+	CALL "%cmdp%sendtoffmpeg_encoder01.cmd"
+) ELSE (
+	ECHO [---  Sorry, the sendtoffmpeg_encoder01.cmd is unreacheable. Unable to continue!      ---]
+	GOTO :End
 )
 
 :End
-ECHO [---------------------------------------------------------------------------------]
-ECHO [     SERVED                                                                      ]
-ECHO [---------------------------------------------------------------------------------]
-
 if %pse% GTR 0 PAUSE

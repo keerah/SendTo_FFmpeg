@@ -14,14 +14,14 @@ FOR %%f IN (%*) DO (
 )
 
 IF %argCount% LEQ 0 (
-	ECHO [----------------------------------------------------------------------------------------]
-	ECHO [     NO FILE^(S^) SPECIFIED                                                               ]
+	ECHO [-----------------------------------------------------------------------------------]
+	ECHO [     NO FILE^(S^) SPECIFIED                                                          ]
 	GOTO :End
 )
 
-ECHO [----------------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v3.0 by Keerah                                            ---]
-ECHO [---  Preset: h264 mp4 420, veryslow, crf 16, lanczos 720p, Film, kf 2 sec, aac256    ---]
+ECHO [-----------------------------------------------------------------------------------]
+ECHO [---  SendTo FFmpeg encoder v3.0 by Keerah                                       ---]
+ECHO [---  Preset: h264 mp4 420, veryslow, crf 16, lanczos 640p, FILM, kf 2 sec, aac128 -]
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -35,32 +35,32 @@ IF EXIST "%argp%sendtoffmpeg_settings.cmd" (
 		CALL "%cmdp%sendtoffmpeg_settings.cmd"
 		ECHO [---  Settings: Global, Verbosity: !vbl!
 	) ELSE (
-		ECHO [---  Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!       ---]
+		ECHO [---  Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!  ---]	
 		GOTO :End
 	)
 )
 
 REM Check for ffmpeg
 IF NOT EXIST "%ffpath%ffmpeg.exe" ( 
-	ECHO [---      Sorry, the path to ffmpeg.exe is unreacheable. Unable to continue!          ---]
+	ECHO [---      Sorry, the path to ffmpeg.exe is unreacheable. Unable to continue!     ---]
 	GOTO :End
 )
 
 
 REM compression settings
 SET "wset.params=-v %vbl% -hide_banner -stats"
-SET "wset.videocomp=-c:v libx264 -preset veryslow -crf 16 -pix_fmt yuv420p -vf scale=-1:720 -sws_flags lanczos -tune film -force_key_frames 0:00:02"
+SET "wset.videocomp=-c:v libx264 -preset veryslow -crf 16 -pix_fmt yuv420p -vf scale=-1:640 -sws_flags lanczos -tune film -force_key_frames 0:00:02"
 	REM The output video will have keyframes each 2 seconds due to -force_key_frames 0:00:02
-	REM scales vertically to fit 720px using lanczos algo
-SET "wset.audiocomp=-c:a aac -b:a 256k"
+	REM scales to fit vertically to 640px
+SET "wset.audiocomp=-c:a aac -b:a 128k"
 IF %quietover% == 1 (SET "wset.over=-y") ELSE (SET "wset.over=")
-IF %dscr% GTR 0 (SET "wset.dscr=_420_crf16_x720_aac256") ELSE (SET "wset.dscr=")
+IF %dscr% GTR 0 (SET "wset.dscr=_420_crf16_x640_aac128") ELSE (SET "wset.dscr=")
 SET "wset.suff=!wset.dscr!.mp4"
 
 IF EXIST "%cmdp%sendtoffmpeg_encoder01.cmd" (
 	CALL "%cmdp%sendtoffmpeg_encoder01.cmd"
 ) ELSE (
-	ECHO [---  Sorry, the sendtoffmpeg_encoder01.cmd is unreacheable. Unable to continue!      ---]
+	ECHO [---  Sorry, the sendtoffmpeg_encoder01.cmd is unreacheable. Unable to continue! ---]
 	GOTO :End
 )
 
