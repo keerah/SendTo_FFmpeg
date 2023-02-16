@@ -31,16 +31,18 @@ REM    Any positive value enables filename suffixes
 SET /A quietover=1
 REM Quiet overwrite
 REM    If it is set to 1, the output files will be always overwritten
+REM    otherwise you'll be getting prompts to overwrite each time
 
 SET /A fps=30
 REM Default framerate for image seuences
+REM    It will aslo be used for Gifs from sequences
 
 SET /A imgseq=1 
 REM Consider image sequences
-REM    if 0 then ffmpeg won't look for image sequences containing the selected file
+REM    if 0 then ffmpeg won't look for image sequences even if the selected file is a part of one
 
 SET /A frcounter=4
 REM Frame counter digits
-REM    The number of digits in the frame counter to detect (leading zeroes assumed)
+REM    The number of digits of the frame counter to detect (leading zeroes assumed)
 REM    If set to 0, the scripts will search for the counter after the first dot in the filename
 REM    taking all digits available (future feature)

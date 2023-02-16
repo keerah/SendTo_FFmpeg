@@ -44,7 +44,7 @@ You can have very different settings for your current (and any other) folder by 
 
 # Image sequence transcoding
 
-Available since **Release 3.0**. To transcode an image sequence you need to select the first frame of the sequence. It will be the starting point of the output video. Be cautious when transcoding images that are part of a detectable sequence(s), it may end up with a bunch of similar sequences on your hands :) If required you can supress the sequence detection by changing the **imgset** (Consider image sequences) to 0 in the settings file. Do not forget you can do it for just one particular folder by copying the settings itno it.
+Available since **Release 3.0**. To transcode an image sequence you need to select the first frame of the sequence. It will be the starting point of the output video. Be cautious when transcoding images that are part of a detectable sequence, it may end up with a bunch of similar videos on your hands :) If required you can supress the sequence detection by changing the **imgset** (Consider image sequences) to 0 in the settings file. Do not forget you can do it for just one particular folder by copying the settings file into it and then changing the option.
 
 # Compatibility
 
