@@ -3,6 +3,8 @@ This is a set of Windows **batch** scripts for effortless video transcoding usin
 
 ![send_to_ffmpeg](https://user-images.githubusercontent.com/9025818/155185990-32fec47d-e557-4a2f-a412-49f2f9a57f3d.jpg "SendTo_FFmpeg presets in the Windows Explorer's Send To menu")
 
+# Installation 
+
 First click **Code** -> **Donwload ZIP** on this page or downlad from the [releases page](https://github.com/keerah/SendTo_FFmpeg/releases) to get all the scripts, its free forever. Or get it from the [Releases page](https://github.com/keerah/SendTo_FFmpeg/releases).
 
 Then you will need to [download the FFmpeg executables](https://ffmpeg.org/download.html#build-windows), it's free.
@@ -32,18 +34,18 @@ That's all. Now you can right click on any file, navigate to **Send To** and sel
 
 Use it in CMD or Powershell as usual.
 
-# More features
-
-## Compatibility
-
-This works with Windows OS only. 
-
-## Other cool features
+# User settings
 
 SendTo_FFmpeg has its global settings, that you can read more about in the sendtoffmpeg_settings.cmd file. They affect all presets at once. You can change them by simply editing **sendtoffmpeg_settings.cmd** in a text editor.
 
-But you can have very different settings for your current (and any other) folder by making a copy of **sendtoffmpeg_settings.cmd** in that folder. All parameters you change in it will affect only the files that are transcoded here. It can be the framerate setting, or descriptive naming flag or even the path to FFMpeg itself, so you can use different versions for different cases.
+## Global vs Local settings
 
-## Image sequence transcoding
+You can have very different settings for your current (and any other) folder by making a copy of **sendtoffmpeg_settings.cmd** in that folder. All parameters you change in it will affect only the files that are transcoded here. It can be the framerate setting, or descriptive naming flag or even the path to FFMpeg itself, so you can use different versions for different cases.
 
-Available since Release 3.0. To transcode an image sequence you need to select the first file of the sequence. There's a limitation for now, it cant be frame with number 0 (or 0000). This frame will be the starting point of the output video. Be cautious when transcoding images that are part of a detectable sequence, you may end up with a bunch of sequences on your hands :)
+# Image sequence transcoding
+
+Available since **Release 3.0**. To transcode an image sequence you need to select the first frame of the sequence. It will be the starting point of the output video. Be cautious when transcoding images that are part of a detectable sequence(s), it may end up with a bunch of similar sequences on your hands :) If required you can supress the sequence detection by changing the **imgset** (Consider image sequences) to 0 in the settings file. Do not forget you can do it for just one particular folder by copying the settings itno it.
+
+# Compatibility
+
+SendTo works with Windows OS only. 

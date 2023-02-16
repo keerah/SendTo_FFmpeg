@@ -3,6 +3,9 @@ REM This is one of the SenTo FFmpeg modular transcoders, keep it with the rest o
 ECHO [----------------------------------------------------------------------------------------]
 ECHO [     %argCount% files queued to encode
 
+SET "zer="
+FOR /L %%I IN (1,1,%frcounter%) DO SET "zer=!zer!0"
+
 FOR /L %%i IN (1,1,%argCount%) DO (
 	
 	ECHO [----------------------------------------------------------------------------------------]
@@ -19,8 +22,14 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 				REM detecting the counter in the end of the filename
 				SET "basename=!argFile[%%i].trname:~0,-%frcounter%!"
 				SET "countername=!argFile[%%i].trname:~-%frcounter%!"
-				FOR /F "tokens=* delims=0" %%N IN ("!countername!") DO SET /A frnumber=%%N
-				IF !frnumber! GTR 0 (
+				SET /A frnumber=-1
+				IF !countername!==%zer% (
+					REM Zero frame
+					SET /A frnumber=0
+				) ELSE (
+				 	FOR /F "tokens=* delims=0" %%N IN ("!countername!") DO SET /A frnumber=%%N 
+				)
+				IF !frnumber! GTR -1 (
 					SET "argFile[%%i].name=!argFile[%%i].path!!basename!%%0!frcounter!d!argFile[%%i].ext!"
 					ECHO [     Image sequence detected                                                       ]
 					ECHO [     Basename: "!basename!" Start frame: !frnumber! Pattern: "!basename!%%0!frcounter!d"
@@ -35,6 +44,7 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 			) ELSE ( 
 				REM detecting the counter after first found dot
 				REM No implementation yet
+				SET "wset.audiocomp="
 			)
 		) ELSE (
 			SET "wset.seqfr="
