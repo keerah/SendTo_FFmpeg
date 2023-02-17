@@ -14,15 +14,15 @@ FOR %%f IN (%*) DO (
 )
 
 IF %argCount% LEQ 0 (
-	ECHO [-----------------------------------------------------------------------------------]
-	ECHO [     NO FILE^(S^) SPECIFIED                                                          ]
+	ECHO -----------------------------------------------------------------------------------
+	ECHO      NO FILE^(S^) SPECIFIED
 	GOTO :End
 )
 
-ECHO [-----------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v3.0 by Keerah                                       ---]
-ECHO [---  Preset: EXR linear half-float, zip16                                       ---]
-ECHO [---  Scales to the next power of 2 to the maximum of width or height            ---]
+ECHO -----------------------------------------------------------------------------------
+ECHO SendTo FFmpeg encoder v3.0 by Keerah
+ECHO Preset: EXR linear half-float, zip16
+ECHO Scales to the next power of 2 to the maximum of width or height
 
 REM This one process only on per frame basis, no sequence detection, no video splitting as of yet
 
@@ -32,32 +32,32 @@ SET "argp=%~dp1"
 REM get settings
 IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
 	CALL "%argp%sendtoffmpeg_settings.cmd"
-	ECHO [---  Settings: *LOCAL*, Verbosity: !vbl!
+	ECHO      Settings: *LOCAL*, Verbosity: !vbl!
 ) ELSE (
 
 	IF EXIST "%cmdp%sendtoffmpeg_settings.cmd" (
 		CALL "%cmdp%sendtoffmpeg_settings.cmd"
-		ECHO [---  Settings: Global, Verbosity: !vbl!
+		ECHO      Settings: Global, Verbosity: !vbl!
 	) ELSE (
-		ECHO [---  Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!  ---]	
+		ECHO !    Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!
 		GOTO :End
 	)
 )
 
 REM Check for ffmpeg
 IF NOT EXIST "%ffpath%ffmpeg.exe" ( 
-		ECHO [---      Sorry, the path to ffmpeg.exe is unreacheable. Unable to continue!     ---]
+		ECHO !    Sorry, the path to ffmpeg.exe is unreacheable. Unable to continue!
 		GOTO :End
 	)	
 
 REM Check for exiftool
 IF NOT EXIST "%ffpath%exiftool.exe" ( 
-		ECHO [---      Sorry, the path to exifprobe.exe is unreacheable. Unable to continue!  ---]
+		ECHO !    Sorry, the path to exifprobe.exe is unreacheable. Unable to continue!
 		GOTO :End
 	)	
 
-ECHO [-----------------------------------------------------------------------------------]
-ECHO [     %argCount% files queued to encode
+ECHO -----------------------------------------------------------------------------------
+ECHO    %argCount% files queued to encode
 
 
 REM compression settings
@@ -77,7 +77,7 @@ SET "wset.suff=!wset.dscr!.exr"
 
 FOR /L %%i IN (1,1,%argCount%) DO (
 
-	ECHO [-----------------------------------------------------------------------------------]
+	ECHO -----------------------------------------------------------------------------------
 
 	REM fetch for the image dimensions using exiftool
 	REM exiftool was chosen because of the its clean output, unlike the ffprobe's, less parsing is simpler and faster
@@ -98,15 +98,15 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 	IF !mSize! GTR 2048 (SET /A "sFac=4096")
 	IF !mSize! GTR 4096 (SET /A "sFac=8192")
 
-	ECHO [     Converting %%i of %argCount%: !argFile[%%i].trname!
-	ECHO [     Image dimensions: !pHeight! by !pWidth!	
-	ECHO [     Target scale: !sFac!x!sFac!
+	ECHO      Converting %%i of %argCount%: !argFile[%%i].trname!
+	ECHO      Image dimensions: !pHeight! by !pWidth!	
+	ECHO      Target scale: !sFac!x!sFac!
 	"%ffpath%ffmpeg.exe" %wset.params% %wset.seqfr% -i "!argFile[%%i].name!" -vf "scale=!sFac!:!sFac!,setsar=1:1" %wset.videocomp% %wset.audiocomp% %wset.over% %wset.seqfrout% "!argFile[%%i].trname!"%wset.suff%
 )
 
-ECHO [-----------------------------------------------------------------------------------]
-ECHO [     SERVED                                                                        ]
-ECHO [-----------------------------------------------------------------------------------]
+ECHO -----------------------------------------------------------------------------------
+ECHO      SERVED                                                                        
+ECHO -----------------------------------------------------------------------------------
 
 :End
 if %pse% GTR 0 PAUSE

@@ -5,9 +5,9 @@ This is a set of Windows **batch** scripts for effortless video transcoding usin
 
 # Installation 
 
-First click **Code** -> **Donwload ZIP** on this page or downlad from the [releases page](https://github.com/keerah/SendTo_FFmpeg/releases) to get all the scripts, its free forever. Or get it from the [Releases page](https://github.com/keerah/SendTo_FFmpeg/releases).
+First click **Code** -> **Donwload ZIP** on this page or downlad from the [releases page](https://github.com/keerah/SendTo_FFmpeg/releases) to get all the scripts, it's all yours for free and forever.
 
-Then you will need to [download the FFmpeg executables](https://ffmpeg.org/download.html#build-windows), it's free.
+Then you will need to [download the FFmpeg executables](https://ffmpeg.org/download.html#build-windows), it's free as well.
 
 By default these scripts assume the path to FFmpeg.exe is **c:\Program Files\ffmpeg\bin**, so you can simply extract the downloaded ffmpeg archive into **c:\Program Files\ffmpeg**. If you place ffmpeg into a different folder, you will need to edit the path to **FFmpeg.exe** in the main settings file **sendtoffmpeg_settings.cmd**.
 

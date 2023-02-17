@@ -14,14 +14,14 @@ FOR %%f IN (%*) DO (
 )
 
 IF %argCount% LEQ 0 (
-	ECHO [-----------------------------------------------------------------------------------]
-	ECHO [     NO FILE^(S^) SPECIFIED                                                          ]
+	ECHO -----------------------------------------------------------------------------------
+	ECHO      NO FILE^(S^) SPECIFIED
 	GOTO :End
 )
 
-ECHO [-----------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v3.0 by Keerah.com                                   ---]
-ECHO [---  Preset: h264 mp4 420 veryslow, crf 14, GRAIN, kf 2sec, Audio aac256        ---]
+ECHO -----------------------------------------------------------------------------------
+ECHO SendTo FFmpeg encoder v3.0 by Keerah.com
+ECHO Preset: h264 mp4 420 veryslow, crf 14, GRAIN, kf 2sec, Audio aac256
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -29,20 +29,20 @@ SET "argp=%~dp1"
 REM get settings
 IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
 	CALL "%argp%sendtoffmpeg_settings.cmd"
-	ECHO [---  Settings: *LOCAL*, Verbosity: !vbl!
+	ECHO      Settings: *LOCAL*, Verbosity: !vbl!
 ) ELSE (
 	IF EXIST "%cmdp%sendtoffmpeg_settings.cmd" (
 		CALL "%cmdp%sendtoffmpeg_settings.cmd"
-		ECHO [---  Settings: Global, Verbosity: !vbl!
+		ECHO      Settings: Global, Verbosity: !vbl!
 	) ELSE (
-		ECHO [---  Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!  ---]	
+		ECHO !    Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!
 		GOTO :End
 	)
 )
 
 REM Check for ffmpeg
 IF NOT EXIST "%ffpath%ffmpeg.exe" ( 
-	ECHO [---      Sorry, the path to ffmpeg.exe is unreacheable. Unable to continue!     ---]
+	ECHO !    Sorry, the path to ffmpeg.exe is unreacheable. Unable to continue!
 	GOTO :End
 )
 
@@ -59,7 +59,7 @@ SET "wset.suff=!wset.dscr!.mp4"
 IF EXIST "%cmdp%sendtoffmpeg_encoder01.cmd" (
 	CALL "%cmdp%sendtoffmpeg_encoder01.cmd"
 ) ELSE (
-	ECHO [---  Sorry, the sendtoffmpeg_encoder01.cmd is unreacheable. Unable to continue! ---]
+	ECHO !    Sorry, the sendtoffmpeg_encoder01.cmd is unreacheable. Unable to continue! 
 	GOTO :End
 )
 
