@@ -14,14 +14,14 @@ FOR %%f IN (%*) DO (
 )
 
 IF %argCount% LEQ 0 (
-	ECHO [-----------------------------------------------------------------------------------]
-	ECHO [     NO FILE^(S^) SPECIFIED                                                          ]
+	ECHO -----------------------------------------------------------------------------------
+	ECHO      NO FILE^(S^) SPECIFIED
 	GOTO :End
 )
 
-ECHO [-----------------------------------------------------------------------------------]
-ECHO [---  SendTo FFmpeg encoder v3.0 by Keerah                                       ---]
-ECHO [---  Preset: APNG plain, loop forever                                           ---]
+ECHO -----------------------------------------------------------------------------------
+ECHO SendTo FFmpeg encoder v3.0 by Keerah
+ECHO Preset: APNG plain, loop forever
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -29,20 +29,20 @@ SET "argp=%~dp1"
 REM get settings
 IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
 	CALL "%argp%sendtoffmpeg_settings.cmd"
-	ECHO [---  Settings: *LOCAL*, Verbosity: !vbl!
+	ECHO      Settings: *LOCAL*, Verbosity: !vbl!
 ) ELSE (
 	IF EXIST "%cmdp%sendtoffmpeg_settings.cmd" (
 		CALL "%cmdp%sendtoffmpeg_settings.cmd"
-		ECHO [---  Settings: Global, Verbosity: !vbl!
+		ECHO      Settings: Global, Verbosity: !vbl!
 	) ELSE (
-		ECHO [---  Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!  ---]	
+		ECHO !    Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!
 		GOTO :End
 	)
 )
 
 REM Check for ffmpeg
 IF NOT EXIST "%ffpath%ffmpeg.exe" ( 
-	ECHO [---      Sorry, the path to ffmpeg.exe is unreacheable. Unable to continue!     ---]
+	ECHO !    Sorry, the path to ffmpeg.exe is unreacheable. Unable to continue!
 	GOTO :End
 )
 
@@ -55,17 +55,17 @@ IF %quietover% == 1 (SET "wset.over=-y") ELSE (SET "wset.over=")
 IF %dscr% GTR 0 (SET "wset.dscr=_animpng") ELSE (SET "wset.dscr=")
 SET "wset.suff=!wset.dscr!.png"
 
-ECHO [-----------------------------------------------------------------------------------]
-ECHO [     %argCount% files queued to encode
+ECHO -----------------------------------------------------------------------------------
+ECHO    %argCount% files queued to encode
 
 FOR /L %%i IN (1,1,%argCount%) DO (
 	
-	ECHO [-----------------------------------------------------------------------------------]
+	ECHO -----------------------------------------------------------------------------------
 
 	FOR /F "tokens=* delims=" %%f IN ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argFile[%%i].name!"') DO SET "vlen=%%f"
 
 	IF !vlen! NEQ "N/A" (
-		ECHO [     The source is a single image file with no length 
+		ECHO      The source is a single image file with no length 
 		
 		IF !imgseq! GTR 0 (
 			REM detecting image sequence
@@ -76,8 +76,8 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 				FOR /F "tokens=* delims=0" %%N IN ("!countername!") DO SET /A frnumber=%%N
 				IF !frnumber! GTR 0 (
 					SET "argFile[%%i].name=!argFile[%%i].path!!basename!%%0!frcounter!d!argFile[%%i].ext!"
-					ECHO [     Image sequence detected                                                       ]
-					ECHO [     Basename: "!basename!" Start frame: !frnumber! Pattern: "!basename!%%0!frcounter!d"
+					ECHO      Image sequence detected
+					ECHO      Basename: "!basename!" Start frame: !frnumber! Pattern: "!basename!%%0!frcounter!d"
 					SET "seqfr=-framerate %fps% -start_number !frnumber! -pattern_type sequence"
 					SET "seqfrout=-r %fps%"
 				) ELSE (
@@ -93,16 +93,16 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 			SET "seqfrout="
 		)
 	) ELSE (
-		echo [     Video length is: !vlen! seconds
+		echo      Video length is: !vlen! seconds
 	)
 
-	ECHO [     Transcoding %%i of %argCount%: !argFile[%%i].trname!
+	ECHO      Transcoding %%i of %argCount%: !argFile[%%i].trname!
 	"%ffpath%ffmpeg.exe" !wset.params! !seqfr! -i "!argFile[%%i].name!" !wset.videocomp! !wset.audiocomp! !seqfrout! !wset.over! "!argFile[%%i].trname!"!wset.suff!
 )
 
-ECHO [-----------------------------------------------------------------------------------]
-ECHO [     SERVED                                                                        ]
-ECHO [-----------------------------------------------------------------------------------]
+ECHO -----------------------------------------------------------------------------------
+ECHO      SERVED                                                                        
+ECHO -----------------------------------------------------------------------------------
 
 :End
 if %pse% GTR 0 PAUSE
