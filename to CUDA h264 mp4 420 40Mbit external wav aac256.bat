@@ -5,10 +5,8 @@ REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmp
 
 setlocal enabledelayedexpansion
 
-ECHO ----------------------------------------------------------------------------------------
-ECHO SendTo FFmpeg encoder v2.15 by Keerah
-ECHO Preset: h264 mp4 CUDA 420, slow, 40 Mbps, kf 2 sec, External Audio to aac256
-ECHO This preset is single file only. Looking for audio source: %~n1.wav
+SET "wset.hline1=Preset: h264 mp4 CUDA 420, slow, 40 Mbps, kf 2 sec, External Audio to aac256"
+SET "wset.hline2=This preset is single file only. Looking for audio source: %~n1.wav"
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -16,16 +14,24 @@ SET "argp=%~dp1"
 REM get settings
 IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
 	CALL "%argp%sendtoffmpeg_settings.cmd"
-	ECHO      Settings: *LOCAL*, Verbosity: !vbl!
+	SET "wset.hline3=Settings: *LOCAL*, Verbosity: !vbl!"
 ) ELSE (
 	IF EXIST "%cmdp%sendtoffmpeg_settings.cmd" (
 		CALL "%cmdp%sendtoffmpeg_settings.cmd"
-		ECHO      Settings: Global, Verbosity: !vbl!
+		SET "wset.hline3=Settings: Global, Verbosity: !vbl!"
 	) ELSE (
 		ECHO !    Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!
 		GOTO :End
 	)
 )
+
+ECHO %divline%
+ECHO SendTo FFmpeg encoder v3.1 by Keerah
+ECHO %wset.hline1%
+IF NOT "[%wset.hline2%]"=="[]" ECHO %wset.hline2%
+ECHO %wset.hline3%
+ECHO %divline%
+ECHO    %argCount% files queued to encode
 
 REM Check for ffmpeg
 IF NOT EXIST "%ffpath%ffmpeg.exe" ( 
@@ -33,7 +39,7 @@ IF NOT EXIST "%ffpath%ffmpeg.exe" (
 	GOTO :End
 )
 
-	ECHO ----------------------------------------------------------------------------------------
+	ECHO %divline%
 
 IF %1.==. (
 
@@ -58,8 +64,8 @@ IF %1.==. (
 )
 
 :End
-ECHO ----------------------------------------------------------------------------------------
+ECHO %divline%
 ECHO SERVED                                                                             
-ECHO ----------------------------------------------------------------------------------------
+ECHO %divline%
 
 if %pse% GTR 0 PAUSE

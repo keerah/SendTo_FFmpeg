@@ -13,31 +13,27 @@ FOR %%f IN (%*) DO (
    SET "argFile[!argCount!].path=%%~dpf"
 )
 
-IF %argCount% LEQ 0 (
-	ECHO ----------------------------------------------------------------------------------------
-	ECHO      NO FILE^(S^) SPECIFIED
-	GOTO :End
-)
-
-ECHO ----------------------------------------------------------------------------------
-ECHO SendTo FFmpeg encoder v2.2 by Keerah.com
-ECHO Preset: h264 mp4 420, veryslow, crf 24, lanczos 540p, Film, kf 2 sec, aac128
-
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
 
 REM get settings
 IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
 	CALL "%argp%sendtoffmpeg_settings.cmd"
-	ECHO      Settings: *LOCAL*, Verbosity: !vbl!
+	SET "wset.hline3=Settings: *LOCAL*, Verbosity: !vbl!"
 ) ELSE (
 	IF EXIST "%cmdp%sendtoffmpeg_settings.cmd" (
 		CALL "%cmdp%sendtoffmpeg_settings.cmd"
-		ECHO      Settings: Global, Verbosity: !vbl!
+		SET "wset.hline3=Settings: Global, Verbosity: !vbl!"
 	) ELSE (
-		ECHO ^!    Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!
+		ECHO !    Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!
 		GOTO :End
 	)
+)
+
+IF %argCount% LEQ 0 (
+	ECHO %divline%
+	ECHO      NO FILE^(S^) SPECIFIED
+	GOTO :End
 )
 
 REM Check for ffmpeg
@@ -48,6 +44,7 @@ IF NOT EXIST "%ffpath%ffmpeg.exe" (
 
 
 REM compression settings
+SET "wset.hline1=Preset: h264 mp4 420, veryslow, crf 24, lanczos 540p, Film, kf 2 sec, aac128"
 SET "wset.params=-v %vbl% -hide_banner -stats"
 SET "wset.videocomp=-c:v libx264 -preset veryslow -crf 24 -pix_fmt yuv420p -vf scale=-1:540 -sws_flags lanczos -tune film -force_key_frames 0:00:02"
 	REM The output video will have keyframes each 2 seconds due to -force_key_frames 0:00:02

@@ -13,31 +13,27 @@ FOR %%f IN (%*) DO (
    SET "argFile[!argCount!].path=%%~dpf"
 )
 
-IF %argCount% LEQ 0 (
-	ECHO ----------------------------------------------------------------------------------------
-	ECHO      NO FILE^(S^) SPECIFIED
-	GOTO :End
-)
-
-ECHO ----------------------------------------------------------------------------------------
-ECHO SendTo FFmpeg encoder v3.0 by Keerah.com
-ECHO Preset: Gif 256 colors, 420px width, 15 fps, 2 pass
-
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
 
 REM get settings
 IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
 	CALL "%argp%sendtoffmpeg_settings.cmd"
-	ECHO      Settings: *LOCAL*, Verbosity: !vbl!
+	SET "wset.hline3=Settings: *LOCAL*, Verbosity: !vbl!"
 ) ELSE (
 	IF EXIST "%cmdp%sendtoffmpeg_settings.cmd" (
 		CALL "%cmdp%sendtoffmpeg_settings.cmd"
-		ECHO      Settings: Global, Verbosity: !vbl!
+		SET "wset.hline3=Settings: Global, Verbosity: !vbl!"
 	) ELSE (
 		ECHO !    Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!
 		GOTO :End
 	)
+)
+
+IF %argCount% LEQ 0 (
+	ECHO %divline%
+	ECHO      NO FILE^(S^) SPECIFIED
+	GOTO :End
 )
 
 REM Check for ffmpeg
@@ -48,10 +44,11 @@ IF NOT EXIST "%ffpath%ffmpeg.exe" (
 
 
 REM compression settings
-SET "wset.fps=10"
-SET "wset.params=-v %vbl% -hide_banner -stats"
-SET "wset.prepass=-vf "fps=15,scale=420:-1:flags=lanczos,palettegen""
-SET "wset.videocomp=-filter_complex "fps=15,scale=420:-1:flags=lanczos[x];[x][1:v]paletteuse""
+SET "wset.hline1=Preset: Gif 256 colors, 420px width, 15 fps, 2 pass"
+SET "wset.fps=15"
+SET "wset.params=-v %vbl% -hide_banner -stats -thread_queue_size 256"
+SET "wset.prepass=-vf "fps=%wset.fps%,scale=420:-1:flags=lanczos,palettegen""
+SET "wset.videocomp=-filter_complex "fps=%wset.fps%,scale=420:-1:flags=lanczos[x];[x][1:v]paletteuse""
 	REM There's no alpha channel support yet. The output file will be saved to the same folder your source comes from.
 	REM You can change the frame rate/resolution by changing fps=XX/scale=XXX values to your preference, just do it in both FFmpeg command lines.
 SET "wset.audiocomp="

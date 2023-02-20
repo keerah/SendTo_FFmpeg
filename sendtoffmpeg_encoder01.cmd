@@ -1,12 +1,17 @@
 REM This is one of the SenTo FFmpeg modular transcoders, keep it with the rest of the files
-REM v3.05
+REM v3.1
 
-ECHO ----------------------------------------------------------------------------------------
+ECHO %divline%
+ECHO SendTo FFmpeg encoder v3.1 by Keerah
+ECHO %wset.hline1%
+IF NOT "[%wset.hline2%]"=="[]" ECHO %wset.hline2%
+ECHO %wset.hline3%
+ECHO %divline%
 ECHO    %argCount% files queued to encode
 
 FOR /L %%i IN (1,1,%argCount%) DO (
 	
-	ECHO ----------------------------------------------------------------------------------------
+	ECHO %divline%
 
 	SET "vlen="
 	FOR /F "tokens=* delims=" %%f IN ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argFile[%%i].name!"') DO SET "vlen=%%f"
@@ -100,6 +105,6 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 )
 
 endlocal
-ECHO ----------------------------------------------------------------------------------------
+ECHO %divline%
 ECHO SERVED                                                                             
-ECHO ----------------------------------------------------------------------------------------
+ECHO %divline%

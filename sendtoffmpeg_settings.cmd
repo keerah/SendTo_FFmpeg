@@ -41,6 +41,8 @@ REM    It will aslo be used for the framerate of Gifs generated from sequences
 SET /A imgseq=1 
 REM Consider image sequences
 REM    if 0 then ffmpeg won't look for image sequences even if the selected file is a part of one
+REM    When this option is on, be cautios if the files you specified are part of a sequence(s),
+REM    each of them can be encoded into a separate video then.
 
 SET /A frcounter=4
 REM Frame counter digits
@@ -51,3 +53,7 @@ SET "frdelim=."
 REM Framecounter delimiter (separation symbol)
 REM   After the code fails to find frame numbers in the end of the filename, it will try
 REM   to find the first delimiter symbol and detect if there's frame number after it.
+REM   Set this to "frdelim=" (empty string) if you do not want this detection to run.
+
+SET "divline=-----------------------------------------------------------------------------------------------"
+REM Divider string used for UI

@@ -14,14 +14,10 @@ FOR %%f IN (%*) DO (
 )
 
 IF %argCount% LEQ 0 (
-	ECHO -----------------------------------------------------------------------------------
+	ECHO %divline%
 	ECHO      NO FILE^(S^) SPECIFIED
 	GOTO :End
 )
-
-ECHO -----------------------------------------------------------------------------------
-ECHO SendTo FFmpeg encoder v3.0 by Keerah
-ECHO Preset: APNG plain, loop forever
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -29,11 +25,11 @@ SET "argp=%~dp1"
 REM get settings
 IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
 	CALL "%argp%sendtoffmpeg_settings.cmd"
-	ECHO      Settings: *LOCAL*, Verbosity: !vbl!
+	SET "wset.hline3=Settings: *LOCAL*, Verbosity: !vbl!"
 ) ELSE (
 	IF EXIST "%cmdp%sendtoffmpeg_settings.cmd" (
 		CALL "%cmdp%sendtoffmpeg_settings.cmd"
-		ECHO      Settings: Global, Verbosity: !vbl!
+		SET "wset.hline3=Settings: Global, Verbosity: !vbl!"
 	) ELSE (
 		ECHO !    Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!
 		GOTO :End
@@ -48,6 +44,7 @@ IF NOT EXIST "%ffpath%ffmpeg.exe" (
 
 
 REM compression settings
+SET "wset.hline1=ECHO Preset: APNG plain, loop forever"
 SET "wset.params=-v %vbl% -hide_banner -stats"
 SET "wset.videocomp=-f apng -plays 0"
 SET "wset.audiocomp="
@@ -55,16 +52,22 @@ IF %quietover% == 1 (SET "wset.over=-y") ELSE (SET "wset.over=")
 IF %dscr% GTR 0 (SET "wset.dscr=_animpng") ELSE (SET "wset.dscr=")
 SET "wset.suff=!wset.dscr!.png"
 
-ECHO -----------------------------------------------------------------------------------
+ECHO %divline%
+ECHO SendTo FFmpeg encoder v3.1 by Keerah
+ECHO %wset.hline1%
+IF NOT "[%wset.hline2%]"=="[]" ECHO %wset.hline2%
+ECHO %wset.hline3%
+ECHO %divline%
 ECHO    %argCount% files queued to encode
+
 
 FOR /L %%i IN (1,1,%argCount%) DO (
 	
-	ECHO -----------------------------------------------------------------------------------
+	ECHO %divline%
 
 	FOR /F "tokens=* delims=" %%f IN ('call "%ffpath%ffprobe.exe" -v error -show_entries "format=duration" -of "default=noprint_wrappers=1:nokey=1" "!argFile[%%i].name!"') DO SET "vlen=%%f"
 
-	IF !vlen! NEQ "N/A" (
+	IF !vlen! == N/A (
 		ECHO      The source is a single image file with no length 
 		
 		IF !imgseq! GTR 0 (
@@ -100,9 +103,9 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 	"%ffpath%ffmpeg.exe" !wset.params! !seqfr! -i "!argFile[%%i].name!" !wset.videocomp! !wset.audiocomp! !seqfrout! !wset.over! "!argFile[%%i].trname!"!wset.suff!
 )
 
-ECHO -----------------------------------------------------------------------------------
-ECHO      SERVED                                                                        
-ECHO -----------------------------------------------------------------------------------
+ECHO %divline%
+ECHO SERVED                                                                        
+ECHO %divline%
 
 :End
 if %pse% GTR 0 PAUSE

@@ -13,16 +13,8 @@ FOR %%f IN (%*) DO (
    SET "argFile[!argCount!].path=%%~dpf"
 )
 
-IF %argCount% LEQ 0 (
-	ECHO -----------------------------------------------------------------------------------
-	ECHO      NO FILE^(S^) SPECIFIED
-	GOTO :End
-)
-
-ECHO -----------------------------------------------------------------------------------
-ECHO SendTo FFmpeg encoder v3.0 by Keerah
-ECHO Preset: EXR linear half-float, zip16
-ECHO Scales to the next power of 2 to the maximum of width or height
+SET "wset.hline1=Preset: EXR linear half-float, zip16"
+SET "wset.hline2=Scales to the next power of 2 to the maximum of width or height"
 
 REM This one process only on per frame basis, no sequence detection, no video splitting as of yet
 
@@ -32,16 +24,21 @@ SET "argp=%~dp1"
 REM get settings
 IF EXIST "%argp%sendtoffmpeg_settings.cmd" ( 
 	CALL "%argp%sendtoffmpeg_settings.cmd"
-	ECHO      Settings: *LOCAL*, Verbosity: !vbl!
+	SET "wset.hline3=Settings: *LOCAL*, Verbosity: !vbl!"
 ) ELSE (
-
 	IF EXIST "%cmdp%sendtoffmpeg_settings.cmd" (
 		CALL "%cmdp%sendtoffmpeg_settings.cmd"
-		ECHO      Settings: Global, Verbosity: !vbl!
+		SET "wset.hline3=Settings: Global, Verbosity: !vbl!"
 	) ELSE (
 		ECHO !    Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!
 		GOTO :End
 	)
+)
+
+IF %argCount% LEQ 0 (
+	ECHO %divline%
+	ECHO      NO FILE^(S^) SPECIFIED
+	GOTO :End
 )
 
 REM Check for ffmpeg
@@ -56,7 +53,12 @@ IF NOT EXIST "%ffpath%exiftool.exe" (
 		GOTO :End
 	)	
 
-ECHO -----------------------------------------------------------------------------------
+ECHO %divline%
+ECHO SendTo FFmpeg encoder v3.1 by Keerah
+ECHO %wset.hline1%
+IF NOT "[%wset.hline2%]"=="[]" ECHO %wset.hline2%
+ECHO %wset.hline3%
+ECHO %divline%
 ECHO    %argCount% files queued to encode
 
 
@@ -77,7 +79,7 @@ SET "wset.suff=!wset.dscr!.exr"
 
 FOR /L %%i IN (1,1,%argCount%) DO (
 
-	ECHO -----------------------------------------------------------------------------------
+	ECHO %divline%
 
 	REM fetch for the image dimensions using exiftool
 	REM exiftool was chosen because of the its clean output, unlike the ffprobe's, less parsing is simpler and faster
@@ -104,9 +106,9 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 	"%ffpath%ffmpeg.exe" %wset.params% %wset.seqfr% -i "!argFile[%%i].name!" -vf "scale=!sFac!:!sFac!,setsar=1:1" %wset.videocomp% %wset.audiocomp% %wset.over% %wset.seqfrout% "!argFile[%%i].trname!"%wset.suff%
 )
 
-ECHO -----------------------------------------------------------------------------------
+ECHO %divline%
 ECHO      SERVED                                                                        
-ECHO -----------------------------------------------------------------------------------
+ECHO %divline%
 
 :End
 if %pse% GTR 0 PAUSE
