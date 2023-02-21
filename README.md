@@ -51,7 +51,7 @@ To transcode an image sequence you need to select the first frame of the sequenc
 Be cautious when transcoding images that are part of the same detectable sequence, it may end up with a bunch of similar videos on your hands :) If required you can supress the sequence detection by changing the **_imgset_** (Consider image sequences) to **0** in the settings file. Do not forget you can do it for just one particular folder by copying the settings file into this folder and changing this option in it. 
 
 ## Frame counter after delimiter
-Since the **Release 3.1** **SendTo** can detect the frame counter in the middle of the file name. It will attempt to do so if the search for the counter at the end of the filename failed. **SendTo** will look for the delimiter symbol, that is defined by the setting **_frdelim_** (Framecounter delimiter), which by default is set to **"."**. If it is set to empty string (_SET "frdelim="_) then this detection is skipped.
+Since the **Release 3.1** **SendTo** can detect the frame counter in the middle of the file name. This feature lets you encode the sequences named like this: _Renderout.0001.puzzleMatte.exr_. **SendTo** will attempt to run this detection if the search for the counter at the end of the filename failed. It will look for the delimiter symbol, that is defined by the setting **_frdelim_** (Framecounter delimiter), which by default is set to **"."**. If it is set to empty string (_SET "frdelim="_) then this detection is skipped.
 
 # Compatibility
 
