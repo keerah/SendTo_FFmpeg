@@ -15,7 +15,7 @@ By default these scripts assume the path to FFmpeg.exe is `c:\Program Files\ffmp
 You can use these batches in a few different ways:
 
 ## Drag-n-drop
-Just drag your files over the corresponding `.bat` file's icon. You can drag files one by one, each will be encoded in a separate process, you can also select multiple files for any script except a couple. Eaxh script announces its features and report about the process, so keep an eye on the output.
+Just drag your files over the corresponding `.bat` file's icon. You can drag files one by one, each will be encoded in a separate process, you can also select multiple files for any script except a couple. Each script announces its features and reports about the process, so keep an eye on the output.
 
 ## Windows explorer's Send To menu
 You can integrate these batches as commands into Windows' `Send To` menu (right-click on any file in the Explorer).
