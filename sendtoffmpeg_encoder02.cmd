@@ -1,8 +1,8 @@
 REM This is one of the SenTo FFmpeg modular transcoders, keep it with the rest of the files
-REM v3.1
+REM v3.11
 
 ECHO %divline%
-ECHO SendTo FFmpeg encoder v3.1 by Keerah
+ECHO SendTo FFmpeg encoder v3.11 by Keerah
 ECHO %wset.hline1%
 IF NOT "[%wset.hline2%]"=="[]" ECHO %wset.hline2%
 ECHO %wset.hline3%
@@ -57,16 +57,16 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 							SET "ddet="
 							FOR /F "delims=0123456789" %%I IN ("!middelimtr!") DO SET ddet=%%i
 							IF defined ddet (
-								ECHO      No frame number after delimiter found. No sequence assumed
+								ECHO      No frame counter after delimiter found. No sequence assumed.
 							) ELSE (
-								ECHO      Image sequence detected. Frame number after delimiter "%frdelim%". Digits:%frcounter%
+								ECHO      Image sequence detected. Frame counter after delimiter "%frdelim%". Digits:%frcounter%.
 								REM Removing leading zeroes (if any)
 								FOR /F "tokens=* delims=0" %%N IN ("!middelimtr!") DO SET "frnumbername=%%N"
 								SET /A "frnumber=!frnumbername!"
 							)
 						)
 					) ELSE (
-						ECHO      Image sequence detected. Frame number at the end of the filename. Digits:%frcounter%
+						ECHO      Image sequence detected. Frame counter at the end of the filename. Digits:%frcounter%.
 						REM Removing leading zeroes (if any)
 						FOR /F "tokens=* delims=0" %%N IN ("!countername!") DO SET "frnumbername=%%N"
 						SET /A "frnumber=!frnumbername!"
@@ -77,17 +77,17 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 					IF [!middelim!] == [] (
 						REM Constructing the pattern in the end of the name
 						SET "argFile[%%i].name=!argFile[%%i].path!!basename!%%0%frcounter%d!argFile[%%i].ext!"
-						ECHO      Basename:"!basename!" Start frame:!frnumber! Pattern:"!basename!%%0%frcounter%d"
+						ECHO      Basename:"!basename!", start frame:!frnumber!, pattern:"!basename!%%0%frcounter%d"
 					) ELSE (
 						REM Constructing the pattern after the delimiter
 						REM !!! Needs a fix if middelim was trimmed to frcounter = add the trimmed part to filename!!!
 						IF !middelim! == !middelimtr! (SET "midsfx=") ELSE (SET midsfx=!middelim:~%frcounter%!)
 						SET "argFile[%%i].name=!argFile[%%i].path!!beforedelim!%frdelim%%%0%frcounter%d!midsfx!%frdelim%!afterdelim!!argFile[%%i].ext!"
-						ECHO      Basename:"!beforedelim!" Start frame:!frnumber! Pattern:"!beforedelim!%frdelim%%%0%frcounter%d!midsfx!%frdelim%!afterdelim!"
+						ECHO      Basename:"!beforedelim!", start frame:!frnumber!, pattern:"!beforedelim!%frdelim%%%0%frcounter%d!midsfx!%frdelim%!afterdelim!"
 					)
 					SET /A fps=!wset.fps!
 					SET "wset.seqfr=-framerate !fps! -start_number !frnumber! -pattern_type sequence"
-					ECHO      The source and output FPS synced to !fps!
+					ECHO      The source and output FPS synced to !fps!.
 				) ELSE (
 					SET "wset.seqfr="
 				)

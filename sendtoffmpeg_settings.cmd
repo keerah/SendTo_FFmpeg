@@ -53,7 +53,7 @@ SET "frdelim=."
 REM Framecounter delimiter (separation symbol)
 REM   After the code fails to find frame numbers in the end of the filename, it will try
 REM   to find the first delimiter symbol and detect if there's frame number after it.
-REM   Set this to "frdelim=" (empty string) if you do not want this detection to run.
+REM   Set this to SET "frdelim=" (empty string) if you do not want this detection to run.
 
 SET "divline=-----------------------------------------------------------------------------------------------"
 REM Divider string used for UI

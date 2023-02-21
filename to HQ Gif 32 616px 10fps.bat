@@ -44,8 +44,8 @@ IF NOT EXIST "%ffpath%ffmpeg.exe" (
 
 
 REM compression settings
-SET "wset.hline1=Gif 32 colors, 616px width, 10 fps, 2 pass, Bayer 3"
-SET "wset.fps=10"
+SET /A wset.fps=10
+SET "wset.hline1=Gif 32 colors, 616px width, %wset.fps% fps, 2 pass, Bayer 3"
 SET "wset.params=-v %vbl% -hide_banner -stats -thread_queue_size 256"
 SET "wset.prepass=-vf "fps=%wset.fps%,scale=616:-1:flags=lanczos,palettegen=max_colors=32:stats_mode=full""
 SET "wset.videocomp=-filter_complex "fps=%wset.fps%,scale=616:-1:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=3""

@@ -1,5 +1,5 @@
 # Description
-This is a set of Windows **batch** scripts for effortless video transcoding using the free **FFmpeg** tool. This is a set of tools I develop mainly for myself and it saves me tons of time in every day work.
+This is a set of Windows **batch** scripts that can transcode mostly everything without opening any clunky software. This is a set of tools I develop mainly for myself and it saves me tons of time in everyday work.
 
 ![send_to_ffmpeg](https://user-images.githubusercontent.com/9025818/155185990-32fec47d-e557-4a2f-a412-49f2f9a57f3d.jpg "SendTo_FFmpeg presets in the Windows Explorer's Send To menu")
 
@@ -7,7 +7,7 @@ This is a set of Windows **batch** scripts for effortless video transcoding usin
 
 First click **Code** -> **Donwload ZIP** on this page or downlad from the [releases page](https://github.com/keerah/SendTo_FFmpeg/releases) to get all the scripts, it's all yours for free and forever.
 
-Then you will need to [download the FFmpeg executables](https://ffmpeg.org/download.html#build-windows), it's free as well.
+Then you will need to [download the FFmpeg executables](https://ffmpeg.org/download.html#build-windows) or from [here on Github](https://github.com/BtbN/FFmpeg-Builds/releases), it's free as well.
 
 By default these scripts assume the path to FFmpeg.exe is **c:\Program Files\ffmpeg\bin**, so you can simply extract the downloaded ffmpeg archive into **c:\Program Files\ffmpeg**. If you place ffmpeg into a different folder, you will need to edit the path to **FFmpeg.exe** in the main settings file **sendtoffmpeg_settings.cmd**.
 
@@ -24,7 +24,7 @@ For this you need to:
 
 1. Put all of these batches to any convenient location (for example in cloud sync folder to have them synced for all machines). Find the file named **sendtoffmpeg_settings.cmd** and edit it to change the path to **FFmpeg** installation if it's different from **c:\Program Files\ffmpeg**.
 
-2. Create the shortcuts for these files (Alt-drag them onto your Desktop for example). Then place these shortcuts into **C:\Users\[YOUR USER NAME]\AppData\Roaming\Microsoft\Windows\SendTo** folder.
+2. Create the shortcuts for these files (Alt-drag them onto your Desktop for example). Then place these shortcuts into **C:\Users\[_YOUR USER NAME_]\AppData\Roaming\Microsoft\Windows\SendTo** folder.
 
 3. Now you may want to rename these shortcuts to get rid of "Shortcut" in the names or to whatever you want, but do not change the **.lnk** extension. Then you have to clear the "Start In" field in each shortcut (this lets the scripts save output files next to your sources) by right clicking one after another and selecting Properties menu. Along with it you can also change the icon of the shortcuts ("Change Icon" button in the same Properties window), these icons will be displayed in the **Send To** menu. This takes time, but a backup of those will serve you well later.
 
@@ -36,7 +36,7 @@ Use it in CMD or Powershell as usual.
 
 # User settings
 
-SendTo_FFmpeg has its global settings, that you can read more about in the sendtoffmpeg_settings.cmd file. They affect all presets at once. You can change them by simply editing **sendtoffmpeg_settings.cmd** in a text editor.
+**SendTo** has its global settings, that you can read more about in the sendtoffmpeg_settings.cmd file. They affect all presets at once. You can change them by simply editing **sendtoffmpeg_settings.cmd** in a text editor.
 
 ## Global vs Local settings
 
@@ -44,8 +44,15 @@ You can have very different settings for your current (and any other) folder by 
 
 # Image sequence transcoding
 
-Available since **Release 3.0**. To transcode an image sequence you need to select the first frame of the sequence. It will be the starting point of the output video. Be cautious when transcoding images that are part of a detectable sequence, it may end up with a bunch of similar videos on your hands :) If required you can supress the sequence detection by changing the **imgset** (Consider image sequences) to 0 in the settings file. Do not forget you can do it for just one particular folder by copying the settings file into it and then changing the option.
+Available since the **Release 3.0**.
+
+## How to
+To transcode an image sequence you need to select the first frame of the sequence, or any other frame to trim the sequence. **SendTo** will look for the frame counter at the end of the filename first, it will consider the number of ending symbols defined by **_frcounter_** setting, which by default is **4**. If you select a few frames that belong to different sequences, they will be transcoded independently.
+Be cautious when transcoding images that are part of the same detectable sequence, it may end up with a bunch of similar videos on your hands :) If required you can supress the sequence detection by changing the **_imgset_** (Consider image sequences) to **0** in the settings file. Do not forget you can do it for just one particular folder by copying the settings file into this folder and changing this option in it. 
+
+## Frame counter after delimiter
+Since the **Release 3.1** **SendTo** can detect the frame counter in the middle of the file name. It will attempt to do so if the search for the counter at the end of the filename failed. **SendTo** will look for the delimiter symbol, that is defined by the setting **_frdelim_** (Framecounter delimiter), which by default is set to **"."**. If it is set to empty string (_SET "frdelim="_) then this detection is skipped.
 
 # Compatibility
 
-SendTo works with Windows OS only. 
+SendTo works with Windows OS only, any relatively modern version of it. 

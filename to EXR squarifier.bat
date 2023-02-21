@@ -14,7 +14,7 @@ FOR %%f IN (%*) DO (
 )
 
 SET "wset.hline1=Preset: EXR linear half-float, zip16"
-SET "wset.hline2=Scales to the next power of 2 to the maximum of width or height"
+SET "wset.hline2=Scales to the next power of 2 of the maximum of either width or height"
 
 REM This one process only on per frame basis, no sequence detection, no video splitting as of yet
 
