@@ -1,5 +1,5 @@
 @ECHO OFF
-REM SendTo_FFmpeg is a set of windows batches for effortless transcoding
+REM SendTo_FFmpeg is an FFmpeg based set of batch scripts for transcoding
 REM Download from https://github.com/keerah/SendTo_FFmpeg
 
 setlocal enabledelayedexpansion
@@ -12,11 +12,6 @@ FOR %%f IN (%*) DO (
    SET "argFile[!argCount!].ext=%%~xf"
    SET "argFile[!argCount!].path=%%~dpf"
 )
-
-SET "wset.hline1=Preset: EXR linear half-float, zip16"
-SET "wset.hline2=Scales to the next power of 2 of the maximum of either width or height"
-
-REM This one process only on per frame basis, no sequence detection, no video splitting as of yet
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -38,6 +33,7 @@ IF EXIST "%argp%sendtoffmpeg_settings.cmd" (
 IF %argCount% LEQ 0 (
 	ECHO %divline%
 	ECHO      NO FILE^(S^) SPECIFIED
+	ECHO %divline%
 	GOTO :End
 )
 
@@ -53,16 +49,11 @@ IF NOT EXIST "%ffpath%exiftool.exe" (
 		GOTO :End
 	)	
 
-ECHO %divline%
-ECHO SendTo FFmpeg encoder v3.1 by Keerah
-ECHO %wset.hline1%
-IF NOT "[%wset.hline2%]"=="[]" ECHO %wset.hline2%
-ECHO %wset.hline3%
-ECHO %divline%
-ECHO    %argCount% files queued to encode
-
 
 REM compression settings
+REM This one process only on per frame basis, no sequence detection, no video splitting as of yet
+SET "wset.hline1=Preset: EXR linear half-float, gamma 1, zip16"
+SET "wset.hline2=Scales to the next power of 2 of the maximum of width/height. No sequences support."
 SET "wset.params=-v %vbl% -hide_banner -stats"
 SET "wset.videocomp=-format 1 -compression 3 -gamma 1"
 	REM available EXR compressions:      0 - none (default), 1 - rle, 2 - zip1, 3 - zip16
@@ -75,6 +66,14 @@ SET "wset.seqfr="
 	rem -pattern_type none
 SET "wset.seqfrout=-update 1 -frames:v 1" 
 SET "wset.suff=!wset.dscr!.exr"
+
+ECHO %divline%
+ECHO SendTo FFmpeg encoder v3.1 by Keerah
+ECHO %wset.hline1%
+IF NOT "[%wset.hline2%]"=="[]" ECHO %wset.hline2%
+ECHO %wset.hline3%
+ECHO %divline%
+ECHO    %argCount% files queued to encode
 
 
 FOR /L %%i IN (1,1,%argCount%) DO (

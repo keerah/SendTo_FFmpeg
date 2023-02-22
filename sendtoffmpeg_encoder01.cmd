@@ -1,8 +1,9 @@
+REM SendTo_FFmpeg is an FFmpeg based set of batch scripts for transcoding
+REM Download from https://github.com/keerah/SendTo_FFmpeg
 REM This is one of the SenTo FFmpeg modular transcoders, keep it with the rest of the files
-REM v3.11
 
 ECHO %divline%
-ECHO SendTo FFmpeg encoder v3.11 by Keerah
+ECHO SendTo FFmpeg encoder v3.15 by Keerah
 ECHO %wset.hline1%
 IF NOT "[%wset.hline2%]"=="[]" ECHO %wset.hline2%
 ECHO %wset.hline3%
@@ -80,7 +81,7 @@ FOR /L %%i IN (1,1,%argCount%) DO (
 						ECHO      Basename:"!basename!", start frame:!frnumber!, pattern:"!basename!%%0%frcounter%d"
 					) ELSE (
 						REM Constructing the pattern after the delimiter
-						REM !!! Needs a fix if middelim was trimmed to frcounter = add the trimmed part to filename!!!
+						REM If middelim was trimmed to frcounter = add the trimmed part to filename
 						IF !middelim! == !middelimtr! (SET "midsfx=") ELSE (SET midsfx=!middelim:~%frcounter%!)
 						SET "argFile[%%i].name=!argFile[%%i].path!!beforedelim!%frdelim%%%0%frcounter%d!midsfx!%frdelim%!afterdelim!!argFile[%%i].ext!"
 						ECHO      Basename:"!beforedelim!", start frame:!frnumber!, pattern:"!beforedelim!%frdelim%%%0%frcounter%d!midsfx!%frdelim%!afterdelim!"

@@ -1,6 +1,6 @@
-REM SendTo_FFmpeg is a set of windows batches for effortless transcoding
+REM SendTo_FFmpeg is an FFmpeg based set of batch scripts for transcoding
 REM Download from https://github.com/keerah/SendTo_FFmpeg
-REM v 3.05
+REM v3.15
 
 REM This is a SendTo_FFmpeg settings file
 REM    You have to be careful here, cause it's an executable part of the scripts
@@ -13,7 +13,7 @@ REM    For example, you can disable the descriptive name suffixes,
 REM    use another default framerate or even use another FFmpeg version
 REM    for a particular folder only
 
-SET "ffpath=c:\Program Files\ffmpeg\bin\"
+SET "ffpath=c:\Program Files\ffmpeg\bin0\"
 REM Path to ffmpeg.exe
 REM    will also look for exiftool.exe here when needed
 

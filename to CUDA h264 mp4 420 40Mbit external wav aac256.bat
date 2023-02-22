@@ -1,12 +1,8 @@
 @ECHO OFF
-REM SendTo_FFmpeg is a set of windows batches for effortless and free transcoding
-REM Copyright (c) 2018-2021 Keerah, keerah.com. All rights reserved
-REM More information at https://keerah.com https://github.com/keerah/SendTo_FFmpeg
+REM SendTo_FFmpeg is an FFmpeg based set of batch scripts for transcoding
+REM Download from https://github.com/keerah/SendTo_FFmpeg
 
 setlocal enabledelayedexpansion
-
-SET "wset.hline1=Preset: h264 mp4 CUDA 420, slow, 40 Mbps, kf 2 sec, External Audio to aac256"
-SET "wset.hline2=This preset is single file only. Looking for audio source: %~n1.wav"
 
 SET "cmdp=%~dp0"
 SET "argp=%~dp1"
@@ -20,36 +16,41 @@ IF EXIST "%argp%sendtoffmpeg_settings.cmd" (
 		CALL "%cmdp%sendtoffmpeg_settings.cmd"
 		SET "wset.hline3=Settings: Global, Verbosity: !vbl!"
 	) ELSE (
-		ECHO !    Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue!
+		ECHO ^!    Sorry, the sendtoffmpeg_settings.cmd is unreacheable. Unable to continue^!
 		GOTO :End
 	)
 )
 
-ECHO %divline%
-ECHO SendTo FFmpeg encoder v3.1 by Keerah
-ECHO %wset.hline1%
-IF NOT "[%wset.hline2%]"=="[]" ECHO %wset.hline2%
-ECHO %wset.hline3%
-ECHO %divline%
-ECHO    %argCount% files queued to encode
+REM compression settings
+SET "wset.hline1=Preset: h264 mp4 CUDA 420, slow, 40 Mbps, kf 2 sec, External Audio to aac256"
+SET "wset.hline2=This preset is single file only. Looking for audio source: %~n1.wav"
+
 
 REM Check for ffmpeg
 IF NOT EXIST "%ffpath%ffmpeg.exe" ( 
-	ECHO !    Sorry, the path to ffmpeg.exe is unreacheable. Unable to continue!
+	ECHO ^!    Sorry, the path to ffmpeg.exe is unreacheable. Unable to continue^!
 	GOTO :End
 )
 
+IF "[%~1]" == "[]" (
+
+	ECHO %divline%
+	ECHO      NO FILE^(S^) SPECIFIED
 	ECHO %divline%
 
-IF %1.==. (
-
-	ECHO      NO FILE SPECIFIED                                                                  
-
 ) ELSE (
-
+	
+	ECHO %divline%
+	ECHO SendTo FFmpeg encoder v3.1 by Keerah
+	ECHO %wset.hline1%
+	IF NOT "[%wset.hline2%]"=="[]" ECHO %wset.hline2%
+	ECHO %wset.hline3%
+	ECHO %divline%
+	ECHO    %argCount% files queued to encode
+	
 	IF not EXIST %~n1.wav (
 
-		ECHO !    Couldn't find the external audio file: %~n1.wav
+		ECHO ^!    Couldn't find the external audio file: %~n1.wav
 		GOTO :End
 	)	
 	
@@ -61,11 +62,11 @@ IF %1.==. (
 	ECHO      Video length is: !vlen! seconds
 	ECHO      Muxing and Transcoding...
 	"%ffpath%ffmpeg.exe" -v %vbl% -hide_banner -stats -i %1 -i "%~n1.wav" -c:a aac -b:a 256k -shortest -c:v h264_nvenc -preset slow -b:v 40M -pix_fmt yuv420p -force_key_frames 0:00:02 -y "%~n1%dscrName%.mp4"
+
+	ECHO %divline%
+	ECHO SERVED                                                                             
+	ECHO %divline%
 )
 
 :End
-ECHO %divline%
-ECHO SERVED                                                                             
-ECHO %divline%
-
 if %pse% GTR 0 PAUSE

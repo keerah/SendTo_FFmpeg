@@ -1,5 +1,5 @@
 @ECHO OFF
-REM SendTo_FFmpeg is a set of windows batches for effortless transcoding
+REM SendTo_FFmpeg is an FFmpeg based set of batch scripts for transcoding
 REM Download from https://github.com/keerah/SendTo_FFmpeg
 
 setlocal enabledelayedexpansion
@@ -33,6 +33,7 @@ IF EXIST "%argp%sendtoffmpeg_settings.cmd" (
 IF %argCount% LEQ 0 (
 	ECHO %divline%
 	ECHO      NO FILE^(S^) SPECIFIED
+	ECHO %divline%
 	GOTO :End
 )
 
