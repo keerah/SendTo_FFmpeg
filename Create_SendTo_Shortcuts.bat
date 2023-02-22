@@ -7,7 +7,7 @@ SET "divline=-------------------------------------------------------------------
 
 ECHO %divline%
 ECHO This is an installation script for SendTo_FFmpeg batches.
-ECHO Make sure you're running this script from the folder that is going to keep the presets present all the time.
+ECHO Make sure you're running this script from the permanent location of all the scripts.
 ECHO The script will create shortcuts to all of the presets and will put them into Windows SendTo folder.
 ECHO You can remove the unnecessary ones after that. The new Explorer window with that folder will be open for you.
 ECHO You will be prompted to overwrite shortcuts if they're already exist.

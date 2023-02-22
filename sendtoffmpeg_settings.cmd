@@ -13,7 +13,7 @@ REM    For example, you can disable the descriptive name suffixes,
 REM    use another default framerate or even use another FFmpeg version
 REM    for a particular folder only
 
-SET "ffpath=c:\Program Files\ffmpeg\bin0\"
+SET "ffpath=c:\Program Files\ffmpeg\bin\"
 REM Path to ffmpeg.exe
 REM    will also look for exiftool.exe here when needed
 
