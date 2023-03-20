@@ -1,27 +1,29 @@
 @ECHO OFF
 REM SendTo_FFmpeg is an FFmpeg based set of batch scripts for transcoding
 REM Download from https://github.com/keerah/SendTo_FFmpeg
-REM animated png compatible preset
+REM gif compatible preset
 
 COLOR 0F
 SETLOCAL ENABLEDELAYEDEXPANSION 
 
 REM === compression settings =======================================================================
-SET "wset.out.video.scale.x.x="
-	REM -1 is to scale proportionally, -2 to also keep it to multiple of 2. Leave empty to disable scaling
-SET "wset.out.video.scale.x.y="
-	REM Scales to fit vertically to 540px. Leave empty to disable scaling
-SET "wset.out.video.scale.x.algo=lanczos"
-	REM bilinear, bicubic, bicublin, gauss, sinc, lanczos, spline and more https://ffmpeg.org/ffmpeg-scaler.html. Can be combined using +
-SET "wset.out.video.fps="
+SET "wset.out.video.fps=15"
 	REM Output framerate in Hz. 1 is to output 1 frame per second. Leave empty for no change. Set to negative value to override input framerate to the Abs(fps), this is useful for Gifs to presere all frames but change playback speed
-SET "wset.out.loop=0"
-	REM 0 - forever, 1 - no loop, 2 - play twice, etc
-SET "wset.out.loop.finaldelay=0"
-	REM Force delay after the last frame in seconds
-SET "wset.out.format=.apng"
-SET "wset.out.video.codec=apng"
-SET "wset.out.params=-hide_banner -stats"
+SET "wset.out.video.colors=256"
+	REM Output gif color resolution
+SET "wset.out.video.scale.x=640"
+	REM Leave empty to disable scaling. -1 is to scale proportionally, -2 to also keep it to multiple of 2
+SET "wset.out.video.scale.y=-1"
+	REM Leave empty to disable scaling. -1 is to scale proportionally, -2 to also keep it to multiple of 2
+SET "wset.out.video.scale.algo=lanczos"
+	REM bilinear, bicubic, bicublin, gauss, sinc, lanczos, spline and more https://ffmpeg.org/ffmpeg-scaler.html Can be combined using +
+SET "wset.out.format=.gif"
+SET "wset.out.video.codec=gif"
+SET "wset.out.video.dither=sierra2_4a"
+	REM sierra2_4a, none, sierra2, sierra3, bayer, heckbert, floyd_steinberg, burkes, atkinson and more https://ffmpeg.org/ffmpeg-filters.html#paletteuse 
+SET "wset.out.video.palette=full"
+	REM full for more static parts, diff for more active parts, single for each frame
+SET "wset.out.params=-hide_banner -stats -thread_queue_size 256"
 SET "wset.out.sequence=0"
 
 REM === color management settings ==================================================================
@@ -40,11 +42,11 @@ SET /A stf.result=0
 SET /A stf.pause=1
 
 IF EXIST "%~dp0sendtoffmpeg_run.cmd" (
-	SET "wset.out.type=01"
+	SET "wset.out.type=02"
 	CALL "%~dp0sendtoffmpeg_run.cmd" %*
 ) ELSE (
 	SET /A stf.result=5
-	ECHO ^^!    Sorry, the sendtoffmpeg_run.cmd module is unreacheable. Unable to continue^^!
+	ECHO [31mSorry, the [01m[30m[41msendtoffmpeg_run.cmd[0m[31m module is unreacheable. Unable to continue^^![0m
 )
 
 IF %stf.result% GTR 0 ECHO [31mResult code is %stf.result%[0m

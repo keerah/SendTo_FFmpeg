@@ -7,13 +7,13 @@ COLOR 0F
 SETLOCAL ENABLEDELAYEDEXPANSION 
 
 REM === compression settings =======================================================================
-SET "wset.out.video.scale.x.x="
+SET "wset.out.video.scale.x=640"
 	REM -1 is to scale proportionally, -2 to also keep it to multiple of 2. Leave empty to disable scaling
-SET "wset.out.video.scale.x.y="
+SET "wset.out.video.scale.y=-1"
 	REM Scales to fit vertically to 540px. Leave empty to disable scaling
-SET "wset.out.video.scale.x.algo=lanczos"
+SET "wset.out.video.scale.algo=lanczos"
 	REM bilinear, bicubic, bicublin, gauss, sinc, lanczos, spline and more https://ffmpeg.org/ffmpeg-scaler.html. Can be combined using +
-SET "wset.out.video.fps="
+SET "wset.out.video.fps=15"
 	REM Output framerate in Hz. 1 is to output 1 frame per second. Leave empty for no change. Set to negative value to override input framerate to the Abs(fps), this is useful for Gifs to presere all frames but change playback speed
 SET "wset.out.loop=0"
 	REM 0 - forever, 1 - no loop, 2 - play twice, etc
