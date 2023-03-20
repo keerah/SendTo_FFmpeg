@@ -9,7 +9,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 REM === compression settings =======================================================================
 SET "wset.out.video.scale.x="
 	REM -1 is to scale proportionally, -2 to also keep it to multiple of 2. Leave empty to disable scaling
-SET "wset.out.video.scale.x="
+SET "wset.out.video.scale.y="
 	REM Scales to fit vertically to 540px. Leave empty to disable scaling
 SET "wset.out.video.scale.algo=lanczos"
 	REM bilinear, bicubic, bicublin, gauss, sinc, lanczos, spline and more https://ffmpeg.org/ffmpeg-scaler.html. Can be combined using +
