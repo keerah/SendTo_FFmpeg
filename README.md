@@ -27,6 +27,7 @@ Just drag your files over the corresponding `.bat` file's icon. You can drag fil
 
 ## Pre-made
 **SendTo** comes with a number of ready-to-use presets that have quality over speed proritization. 
+
 Presets are built in groups dedicated to a particular encoder.
 
 ## Creating new presets
@@ -64,7 +65,9 @@ There's also the new global option `stf.cm.on` that toggles the color management
 # Compatibility
 
 FFmpeg 4, 5 and 6 compatible
+
 No other dependencies 
+
 **SendTo** works with Windows OS only, any relatively modern version of it. 
 
 # License
