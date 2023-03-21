@@ -7,7 +7,7 @@ This is a set of Windows **batch** scripts that can transcode mostly everything 
 
 First click `Code` -> `Donwload ZIP` on this page or downlad from the [releases page](https://github.com/keerah/SendTo_FFmpeg/releases) to get all the scripts, it's all yours for free and forever. Unpack the downloaded zip to any convenient location where these presets will stay present.
 
-Then you will need to [download the FFmpeg executables](https://ffmpeg.org/download.html#build-windows) or from [here on Github](https://github.com/BtbN/FFmpeg-Builds/releases), it's free as well.
+Then you will need to [download the offical FFmpeg executables](https://ffmpeg.org/download.html#build-windows) or from [here on Github](https://github.com/BtbN/FFmpeg-Builds/releases), it's free as well.
 
 By default these scripts assume the path to FFmpeg.exe is `c:\Program Files\ffmpeg\bin`, so you can simply extract the downloaded ffmpeg archive into `c:\Program Files\ffmpeg`. If you place ffmpeg into a different folder, you will need to edit the `stf.path.ffmpeg` option in the settings file named `sendtoffmpeg_settings.cmd`. There's a full description for each option in that file.
 
@@ -53,6 +53,8 @@ You can have very different settings for your current (and any other) folder by 
 
 # Color management
 
+Color management feature is still work in progress, no actual color conversion is applied in current beta.
+
 There's a new section in each of the presets that defines 4 main parameters for both input and output: colorspace, primaries, transfer function and color range. The list of available options attached. 
 There's also the new global option `stf.cm.on` that toggles the color management for all presetets. By default it is on (set to 1).
 
@@ -60,11 +62,10 @@ There's also the new global option `stf.cm.on` that toggles the color management
 
 - **SendTo** currently considers the first video and audio streams as the source. Although FFmpeg still auto resolves other streams, there's no guarantee it'll work out for each case.
 - When you select a large amount of the files to transcode you may bump into the command line length limitation of 8191 characters. To workaround this you can select fewer files.
-- Color management feature is now in Beta stage.
 
 # Compatibility
 
-FFmpeg 4, 5 and 6 compatible
+FFmpeg 4.3+, 5 and 6 compatible
 
 No other dependencies 
 

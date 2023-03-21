@@ -1,11 +1,11 @@
 @ECHO OFF
 REM SendTo_FFmpeg is an FFmpeg based set of batch scripts for transcoding
 REM Download from https://github.com/keerah/SendTo_FFmpeg
-REM libx264 compatible preset with scale support
+REM nvenc compatible preset
 
 REM === compression settings =======================================================================
-SET "wset.out.video.rate=20"
-	REM Crf factor: 0–51 for 8bit, 0–63 for 10bit, copy to copy the stream, leave empty to disable video. Values below 18 considered visualy lossless. Increasing the value +6 results in roughly half the rate/file size
+SET "wset.out.video.rate=10M"
+	REM copy to copy the stream, leave empty to disable video
 SET "wset.out.audio.rate=128k"
 	REM 64k, 96k, 128k, 256k, 320k, copy to copy the stream, leave empty to disable audio
 SET "wset.out.video.scale.x="
@@ -17,21 +17,20 @@ SET "wset.out.video.scale.algo=lanczos"
 SET "wset.out.video.fps="
 	REM Output framerate in Hz. 1 is to output 1 frame per second. Leave empty for no change. Set to negative value to override input framerate to the Abs(fps), this is useful for Gifs to presere all frames but change playback speed
 SET "wset.out.format=.mp4"
-SET "wset.out.video.codec=libx264"
-	REM h264_nvenc, hevc_nvenc - CUDA h264, h265 encoders. h264_qsv, hevc_qsv - Intel Quick Sync h264, h265 encoders. libvpx, libvpx-vp9, vp9_qsv - vp8, vp9 codecs. libx264, libx265dnxhd, prores, prores_aw, prores_ks, rawvideo. Use "ffmpeg -ecncoders" command to list. Other codecs may have requirements not compatible with this preset
-SET "wset.out.video.rate.control=cbr"
-	REM Not used yet. libx264 supports: crf, qp, aq-mode x
+SET "wset.out.video.codec=hevc_nvenc"
+	REM h264_nvenc, hevc_nvenc - CUDA h264, h265 encoders. h264_qsv, hevc_qsv - Intel Quick Sync h264, h265 encoders. libvpx, libvpx-vp9, vp9_qsv - vp8, vp9 codecs. libx264, libx265, dnxhd, prores, prores_aw, prores_ks, rawvideo. Use "ffmpeg -ecncoders" command to list. Other codecs may have requirements not compatible with this preset
+SET "wset.out.video.rate.control=vbr"
+	REM hevc_nvenc supports: constqp, vbr, cbr, cbr_ld_hq, cbr_hq, vbr_hq
 SET "wset.out.video.sampling=yuv420p"
-	REM libx264 supports: yuv420p, yuvj420p, yuv422p, yuvj422p, yuv444p, yuvj444p, nv12, nv16, nv21, yuv420p10le, yuv422p10le, yuv444p10le, nv20le, gray, gray10le
-SET "wset.out.video.preset=veryslow"
-	REM libx264 supports: medium, ultrafast, superfast, veryfast, faster, fast, slow, veryslow, placebo. This option also affects the rate
-SET "wset.out.video.tune=film"
-	REM libx264 supports: film, grain, animation, zerolatency, fastdecode, stillimage
+	REM hevc_nvenc supports: yuv420p, nv12, p010le, yuv444p, p016le, yuv444p16le, bgr0, bgra, rgb0, rgba, x2rgb10le, x2bgr10le, gbrp, gbrp16le, cuda, d3d11
+SET "wset.out.video.preset=p7"
+	REM hevc_nvenc supports: default, slow (hq 2 passes), medium (hq 1 pass), fast, lossless, hq, p1...p7 (slowest best). Use ffmpeg -h encoder=h264_nvenc command for all options
+SET "wset.out.video.tune=hq"
+	REM hevc_nvenc supports: hq, ll (low latency), ull, lossless
 SET "wset.out.video.keyframes=50"
-	REM The output video will have keyframes each 50 frames, more keyframes (lower value) increases the output size
-SET "wset.out.video.profile=-profile:v baseline -level 3.0"
+	REM The output video will have keyframes each 2 seconds, more keyframes (lower value) increases the output size
 SET "wset.out.audio.codec=aac"
-	REM aac, aac_mf, alac, flac, mp3_mf, opus, pcm_s16le, pcm_s24le, vorbis. Use "ffmpeg -ecncoders" command to list. Other codecs may have requirements not compatible with this preset
+	REM aac, aac_mf, alac, flac, mp3_mf, opus, pcm_s16be, pcm_s16le, pcm_s24le, pcm_s24be, vorbis. Use "ffmpeg -ecncoders" command to list. Other codecs may have requirements not compatible with this preset
 SET "wset.out.audio.sampling="
 	REM Not used yet. aac supports: 96000 88200 64000 48000 44100 32000 24000 22050 16000 12000 11025 8000 7350
 SET "wset.in.audio.file.extension="
@@ -57,7 +56,7 @@ SET /A stf.result=0
 SET /A stf.con.pause=1
 
 IF EXIST "%~dp0sendtoffmpeg_run.cmd" (
-	SET "wset.out.type=04"
+	SET "wset.out.type=05"
 	CALL "%~dp0sendtoffmpeg_run.cmd" %*
 ) ELSE (
 	SET /A stf.result=5

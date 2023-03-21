@@ -1,6 +1,6 @@
 REM SendTo_FFmpeg is an FFmpeg based set of batch scripts for transcoding
 REM Download from https://github.com/keerah/SendTo_FFmpeg
-REM v3.5
+REM v3.35b
 
 REM This is a SendTo_FFmpeg settings file
 REM    You have to be careful here, cause it's an executable part of the scripts
@@ -63,7 +63,9 @@ REM   If set to 1 the color management is on
 SET "stf.con.divline=[38;5;8m-----------------------------------------------------------------------------------------------[0m"
 REM Divider string used for UI
 
+SET "stf.debug.ffcommand="
+REM Debug option to display the generated FFmpeg command line
+
 REM === End of settings ============================================================================
 
-:End
 EXIT /B

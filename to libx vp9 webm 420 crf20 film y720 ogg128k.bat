@@ -3,9 +3,6 @@ REM SendTo_FFmpeg is an FFmpeg based set of batch scripts for transcoding
 REM Download from https://github.com/keerah/SendTo_FFmpeg
 REM vp compatible preset
 
-COLOR 0F
-SETLOCAL ENABLEDELAYEDEXPANSION 
-
 REM === compression settings =======================================================================
 SET "wset.out.video.rate=40"
 	REM copy to copy the stream, libvpx-vp9 crf supports: -1 to 63
@@ -49,6 +46,8 @@ SET "wset.out.cm.range=tv"
 	REM Leave the cm.space empty to disable management for input/output. Color spaces: rgb, bt709, fcc, bt470bg, bt2020nc, bt2020c, smpte170m, smpte240m. Ranges: pc, tv, mpeg, jpeg. Primaries: bt709, bt470m, bt470bg, bt2020, film, smpte170m, smpte240m. Transforms: bt709, gamma22, gamma28, linear, log, log_sqrt, bt2020_10, bt2020_12, smpte170m, smpte240m. For full list refer to https://ffmpeg.org/ffmpeg-codecs.html
 REM ================================================================================================
 
+COLOR 0F
+SETLOCAL ENABLEDELAYEDEXPANSION 
 SET /A stf.result=0
 SET /A stf.con.pause=1
 

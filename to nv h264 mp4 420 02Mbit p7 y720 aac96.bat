@@ -3,14 +3,19 @@ REM SendTo_FFmpeg is an FFmpeg based set of batch scripts for transcoding
 REM Download from https://github.com/keerah/SendTo_FFmpeg
 REM nvenc compatible preset
 
-COLOR 0F
-SETLOCAL ENABLEDELAYEDEXPANSION 
-
 REM === compression settings =======================================================================
-SET "wset.out.video.rate=4M"
+SET "wset.out.video.rate=2M"
 	REM copy to copy the stream, leave empty to disable video
 SET "wset.out.audio.rate=96k"
 	REM 64k, 96k, 128k, 256k, 320k, copy to copy the stream, leave empty to disable audio
+SET "wset.out.video.scale.x=-2"
+	REM Leave empty to disable scaling. -1 is to scale proportionally, -2 to also keep it to multiple of 2 (use -2 for mp4)
+SET "wset.out.video.scale.y=720"
+	REM Leave empty to disable scaling. -1 is to scale proportionally, -2 to also keep it to multiple of 2 (use -2 for mp4)
+SET "wset.out.video.scale.algo=lanczos"
+	REM bilinear, bicubic, bicublin, gauss, sinc, lanczos, spline and more https://ffmpeg.org/ffmpeg-scaler.html
+SET "wset.out.video.fps="
+	REM Output framerate in Hz. 1 is to output 1 frame per second. Leave empty for no change. Set to negative value to override input framerate to the Abs(fps), this is useful for Gifs to presere all frames but change playback speed
 SET "wset.out.format=.mp4"
 SET "wset.out.video.codec=h264_nvenc"
 	REM h264_nvenc, hevc_nvenc - CUDA h264, h265 encoders. h264_qsv, hevc_qsv - Intel Quick Sync h264, h265 encoders. libvpx, libvpx-vp9, vp9_qsv - vp8, vp9 codecs. libx264, libx265, dnxhd, prores, prores_aw, prores_ks, rawvideo. Use "ffmpeg -ecncoders" command to list. Other codecs may have requirements not compatible with this preset
@@ -19,7 +24,7 @@ SET "wset.out.video.rate.control=vbr"
 SET "wset.out.video.sampling=yuv420p"
 	REM h264_nvenc supports: yuv420p, nv12, p010le, yuv444p, p016le, yuv444p16le, bgr0, bgra, rgb0, rgba, x2rgb10le, x2bgr10le, gbrp, gbrp16le, cuda, d3d11
 SET "wset.out.video.preset=p7"
-	REM h264_nvenc supports: slow (2 passes), medium, fast, lossless, hq, p1...p7. Use ffmpeg -h encoder=h264_nvenc command for all options
+	REM h264_nvenc supports: default, slow (hq 2 passes), medium (hq 1 pass), fast, lossless, hq, p1...p7 (slowest best). Use ffmpeg -h encoder=h264_nvenc command for all options
 SET "wset.out.video.tune=hq"
 	REM h264_nvenc supports: hq, ll (low latency), ull, lossless
 SET "wset.out.video.keyframes=50"
@@ -45,6 +50,8 @@ SET "wset.out.cm.range=tv"
 	REM Leave the cm.space empty to disable management for input/output. Color spaces: rgb, bt709, fcc, bt470bg, bt2020nc, bt2020c, smpte170m, smpte240m. Ranges: pc, tv, mpeg, jpeg. Primaries: bt709, bt470m, bt470bg, bt2020, film, smpte170m, smpte240m. Transforms: bt709, gamma22, gamma28, linear, log, log_sqrt, bt2020_10, bt2020_12, smpte170m, smpte240m. For full list refer to https://ffmpeg.org/ffmpeg-codecs.html
 REM ================================================================================================
 
+COLOR 0F
+SETLOCAL ENABLEDELAYEDEXPANSION 
 SET /A stf.result=0
 SET /A stf.con.pause=1
 

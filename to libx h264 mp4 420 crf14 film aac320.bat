@@ -4,9 +4,9 @@ REM Download from https://github.com/keerah/SendTo_FFmpeg
 REM libx264 compatible preset with scale support
 
 REM === compression settings =======================================================================
-SET "wset.out.video.rate=20"
+SET "wset.out.video.rate=14"
 	REM Crf factor: 0–51 for 8bit, 0–63 for 10bit, copy to copy the stream, leave empty to disable video. Values below 18 considered visualy lossless. Increasing the value +6 results in roughly half the rate/file size
-SET "wset.out.audio.rate=128k"
+SET "wset.out.audio.rate=320k"
 	REM 64k, 96k, 128k, 256k, 320k, copy to copy the stream, leave empty to disable audio
 SET "wset.out.video.scale.x="
 	REM Leave empty to disable scaling. -1 is to scale proportionally, -2 to also keep it to multiple of 2 (use -2 for mp4)
@@ -29,7 +29,6 @@ SET "wset.out.video.tune=film"
 	REM libx264 supports: film, grain, animation, zerolatency, fastdecode, stillimage
 SET "wset.out.video.keyframes=50"
 	REM The output video will have keyframes each 50 frames, more keyframes (lower value) increases the output size
-SET "wset.out.video.profile=-profile:v baseline -level 3.0"
 SET "wset.out.audio.codec=aac"
 	REM aac, aac_mf, alac, flac, mp3_mf, opus, pcm_s16le, pcm_s24le, vorbis. Use "ffmpeg -ecncoders" command to list. Other codecs may have requirements not compatible with this preset
 SET "wset.out.audio.sampling="
@@ -38,7 +37,7 @@ SET "wset.in.audio.file.extension="
 	REM If the file extension is defined here (eg .wav), the audio file with the same name as the source's but with this extension will be added as audio to the output. Use uncompressed audio like wav for faster and more precise muxing
 SET "wset.out.params=-hide_banner -stats"
 SET "wset.out.sequence=0"
-
+	
 REM === color management settings ==================================================================
 SET "wset.in.cm.space=bt709"
 SET "wset.in.cm.primaries=bt709"

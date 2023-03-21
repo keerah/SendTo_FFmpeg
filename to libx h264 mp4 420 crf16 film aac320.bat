@@ -1,22 +1,19 @@
 @ECHO OFF
 REM SendTo_FFmpeg is an FFmpeg based set of batch scripts for transcoding
 REM Download from https://github.com/keerah/SendTo_FFmpeg
-REM libx compatible preset with scale support
-
-COLOR 0F
-SETLOCAL ENABLEDELAYEDEXPANSION 
+REM libx264 compatible preset with scale support
 
 REM === compression settings =======================================================================
-SET "wset.out.video.rate=14"
+SET "wset.out.video.rate=16"
 	REM Crf factor: 0–51 for 8bit, 0–63 for 10bit, copy to copy the stream, leave empty to disable video. Values below 18 considered visualy lossless. Increasing the value +6 results in roughly half the rate/file size
-SET "wset.out.audio.rate=256k"
+SET "wset.out.audio.rate=320k"
 	REM 64k, 96k, 128k, 256k, 320k, copy to copy the stream, leave empty to disable audio
 SET "wset.out.video.scale.x="
 	REM Leave empty to disable scaling. -1 is to scale proportionally, -2 to also keep it to multiple of 2 (use -2 for mp4)
 SET "wset.out.video.scale.y="
 	REM Leave empty to disable scaling. -1 is to scale proportionally, -2 to also keep it to multiple of 2 (use -2 for mp4)
 SET "wset.out.video.scale.algo=lanczos"
-	REM bilinear, bicubic, bicublin, gauss, sinc, lanczos, spline and more https://ffmpeg.org/ffmpeg-scaler.html. Can be combined using +
+	REM bilinear, bicubic, bicublin, gauss, sinc, lanczos, spline and more https://ffmpeg.org/ffmpeg-scaler.html
 SET "wset.out.video.fps="
 	REM Output framerate in Hz. 1 is to output 1 frame per second. Leave empty for no change. Set to negative value to override input framerate to the Abs(fps), this is useful for Gifs to presere all frames but change playback speed
 SET "wset.out.format=.mp4"
@@ -27,7 +24,7 @@ SET "wset.out.video.rate.control=cbr"
 SET "wset.out.video.sampling=yuv420p"
 	REM libx264 supports: yuv420p, yuvj420p, yuv422p, yuvj422p, yuv444p, yuvj444p, nv12, nv16, nv21, yuv420p10le, yuv422p10le, yuv444p10le, nv20le, gray, gray10le
 SET "wset.out.video.preset=veryslow"
-	REM libx264 supports: ...fast, medium, slow, veryslow, placebo. This option also affects the rate. Use ffmpeg -h encoder=libx264 for all options
+	REM libx264 supports: medium, ultrafast, superfast, veryfast, faster, fast, slow, veryslow, placebo. This option also affects the rate
 SET "wset.out.video.tune=film"
 	REM libx264 supports: film, grain, animation, zerolatency, fastdecode, stillimage
 SET "wset.out.video.keyframes=50"
@@ -40,7 +37,7 @@ SET "wset.in.audio.file.extension="
 	REM If the file extension is defined here (eg .wav), the audio file with the same name as the source's but with this extension will be added as audio to the output. Use uncompressed audio like wav for faster and more precise muxing
 SET "wset.out.params=-hide_banner -stats"
 SET "wset.out.sequence=0"
-	
+
 REM === color management settings ==================================================================
 SET "wset.in.cm.space=bt709"
 SET "wset.in.cm.primaries=bt709"
@@ -53,6 +50,8 @@ SET "wset.out.cm.range=tv"
 	REM Leave the cm.space empty to disable management for input/output. Color spaces: rgb, bt709, fcc, bt470bg, bt2020nc, bt2020c, smpte170m, smpte240m. Ranges: pc, tv, mpeg, jpeg. Primaries: bt709, bt470m, bt470bg, bt2020, film, smpte170m, smpte240m. Transforms: bt709, gamma22, gamma28, linear, log, log_sqrt, bt2020_10, bt2020_12, smpte170m, smpte240m. For full list refer to https://ffmpeg.org/ffmpeg-codecs.html
 REM ================================================================================================
 
+COLOR 0F
+SETLOCAL ENABLEDELAYEDEXPANSION 
 SET /A stf.result=0
 SET /A stf.con.pause=1
 

@@ -19,12 +19,12 @@ SET "wset.out.video.codec.gamma=1"
 	REM gamma value between, min 0.001 
 
 REM === consolidated transcoding settings =============================================================
-SET "wset.con.line[0]=Square EXR, gamma [01m%wset.out.video.codec.gamma%[0m, depth [01m%wset.out.video.codec.depth%[0m, compression [01m%wset.out.video.codec.compression%[0m"
-SET "wset.con.line[2]=Scales to the next power of 2 of the maximum of width/height. No sequence support."
+SET "wset.con.line.v=Square EXR, gamma [01m%wset.out.video.codec.gamma%[0m, depth [01m%wset.out.video.codec.depth%[0m, compression [01m%wset.out.video.codec.compression%[0m"
+SET "wset.con.line.info=Scales to the next power of 2 of the maximum of width/height. No sequence support."
 SET "wset.out.video.comp=-format %wset.out.video.codec.depth% -compression %wset.out.video.codec.compression% -gamma %wset.out.video.codec.gamma%"
 
-SET "wset.con.line[1]=Audio is not supported for this format"
-SET "wset.con.line[11]=None"
+SET "wset.con.line.a=Audio is not supported for this format"
+SET "wset.con.line.ac=None"
 SET "wset.out.audio.comp="
 
 SET "wset.out.descriptive=_exr_square"
@@ -49,13 +49,13 @@ FOR %%f IN (%*) DO (
 REM Get settings
 IF EXIST "%wset.path.arg%sendtoffmpeg_settings.cmd" ( 
 	CALL "%wset.path.arg%sendtoffmpeg_settings.cmd"
-	SET "wset.con.line[3]=SendTo settings  : [30m[44m Local [0m"
-	SET "wset.con.line[4]=Verbosity level  : !stf.con.verbose!"
+	SET "wset.con.line.set=SendTo settings  : [30m[44m Local [0m"
+	SET "wset.con.line.verb=Verbosity level  : !stf.con.verbose!"
 ) ELSE (
 	IF EXIST "%wset.path.cmd%sendtoffmpeg_settings.cmd" (
 		CALL "%wset.path.cmd%sendtoffmpeg_settings.cmd"
-		SET "wset.con.line[3]=SendTo settings  : [30m[47m Global [0m"
-		SET "wset.con.line[4]=Verbosity level  : !stf.con.verbose!"
+		SET "wset.con.line.set=SendTo settings  : [30m[47m Global [0m"
+		SET "wset.con.line.verb=Verbosity level  : !stf.con.verbose!"
 	) ELSE (
 		SET /A stf.result=1
 		ECHO %stf.con.divline%
@@ -81,7 +81,7 @@ IF NOT EXIST "%stf.path.ffmpeg%ffmpeg.exe" (
 	ECHO [31mSorry, the [30m[30m[41mffmpeg.exe[0m[31m is unreacheable. Unable to continue^^![0m
 	ECHO Your ffmpeg path is [03m"%stf.path.ffmpeg%ffmpeg.exe"[0m.
 	ECHO Check it and change the current settings accordingly.
-	ECHO Your current settings are %wset.con.line[2]:~12%
+	ECHO Your current settings are %wset.con.line.info:~12%
 	ECHO %stf.con.divline%
 	GOTO :End
 )	
@@ -93,15 +93,15 @@ IF %wset.argCount% LEQ 0 (
 	GOTO :End
 )
 
-ECHO [03m[33mSendTo FFmpeg encoder v3.5x by Keerah[0m
+ECHO [03m[33mSendTo_FFmpeg encoder v3.3bx by Keerah[0m
 ECHO !stf.con.divline!
-ECHO Video preset     : !wset.con.line[0]!
-ECHO       codec      : !wset.con.line[10]!
-ECHO Audio preset     : !wset.con.line[1]!
-ECHO       codec      : !wset.con.line[11]!
-IF DEFINED wset.con.line[2] ECHO Preset notes     : !wset.con.line[2]!
-ECHO %wset.con.line[3]%
-ECHO %wset.con.line[4]%
+ECHO Video preset     : !wset.con.line.v!
+ECHO       codec      : !wset.con.line.vc!
+ECHO Audio preset     : !wset.con.line.a!
+ECHO       codec      : !wset.con.line.ac!
+IF DEFINED wset.con.line.info ECHO Preset notes     : !wset.con.line.info!
+ECHO %wset.con.line.set%
+ECHO %wset.con.line.verb%
 ECHO %stf.con.divline%
 ECHO    [01m%wset.argCount%[0m files queued to encode
 
