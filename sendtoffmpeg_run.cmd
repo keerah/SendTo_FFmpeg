@@ -4,7 +4,7 @@ REM This is one of the SenTo_FFmpeg's modules, keep it with the rest of the file
 
 COLOR 0F
 TITLE SendTo FFmpeg: initializing
-ECHO [03m[33mSendTo_FFmpeg encoder REM v3.35b by Keerah[0m
+ECHO [03m[33mSendTo_FFmpeg encoder v3.35b by Keerah[0m
 
 REM Get arguments
 SET "wset.path.cmd=%~dp0"
