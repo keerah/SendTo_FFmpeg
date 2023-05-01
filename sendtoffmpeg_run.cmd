@@ -208,6 +208,17 @@ IF "!wset.out.type!"=="06" (
 	GOTO :Process
 )
 
+REM === tiff
+IF "!wset.out.type!"=="09" (
+	IF DEFINED wset.out.video.scale.vf SET "wset.out.video.vf.comp=-vf "showinfo!wset.out.video.scale.vf!""
+
+	SET "wset.con.line.v=tiff, chroma [01m!wset.out.video.sampling![0m, algo [01m!wset.out.video.compress![0m"
+	SET "wset.dscr.video.comp=_!wset.out.video.sampling!_tiff_!wset.out.video.compress!"
+	SET "wset.out.video.comp=!wset.out.video.vf.comp! "-c:v" !wset.out.video.codec! -compression_algo !wset.out.video.compress! -pix_fmt !wset.out.video.sampling!"
+	SET "wset.out.descriptive=!wset.dscr.video.comp!!wset.dscr.video.scale!!wset.dscr.video.fps!!wset.dscr.audio.comp!"
+	GOTO :Process
+)
+
 REM === libxvp9
 IF "!wset.out.type!"=="07" (
 	IF DEFINED wset.out.video.scale.vf SET "wset.out.video.vf.comp=-vf "showinfo!wset.out.video.scale.vf!""
