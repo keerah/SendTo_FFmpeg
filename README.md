@@ -1,19 +1,31 @@
 # Description
-This is a set of Windows **batch** scripts that can transcode mostly everything without opening any clunky software. This is a set of tools I develop mainly for myself and it saves me tons of time in everyday work.
 
-![send_to_ffmpeg](https://user-images.githubusercontent.com/9025818/155185990-32fec47d-e557-4a2f-a412-49f2f9a57f3d.jpg "SendTo_FFmpeg presets in the Windows Explorer's Send To menu")
+SendTo_FFmpeg is a nearly zero-dependacy workframe that solves all of your transcoding needs right from the Windows explorer (or from the command line).
+This is a set of tools I develop mainly for myself and it saves me tons of time in everyday work. This set allows to to transode virtually anything into everything, it supports image sequences and hardware acceleration.
+
+The scripts are simple Windows batch sripts that you can engage via drag-n-drop or by using a provided script to incorporate them into the Explorer's `Send To` menu.
+Each preset is a batch file that initializes the transoding settings and pass them along with your files to FFmpeg. These presets are easy to edit and it's eqsy to create new presets of your own.
+
+There's a separate batch file that contains all global settings used by every preset. But the settings can also be localized (overriden) to a specific folder by copying and modifying the settings file into that folder.
+`SendTo_FFmpeg` is easy to get up and running and to configure using a simple text editor.
+
+<img src="https://github.com/keerah/SendTo_FFmpeg/assets/9025818/a6dbd6f0-73a2-484d-aaa1-0147b31e50ee)" alt="SendTo interface" width=65%>
+
 
 # Installation 
 
-First click `Code` -> `Donwload ZIP` on this page or downlad from the [releases page](https://github.com/keerah/SendTo_FFmpeg/releases) to get all the scripts, it's all yours for free and forever. Unpack the downloaded zip to any convenient location where these presets will stay present.
+First click `Code` -> `Donwload ZIP` on this page or downlad from the [releases page](https://github.com/keerah/SendTo_FFmpeg/releases) to get all the scripts. Unpack the downloaded zip to any convenient location where these presets will stay present.
 
-Then you will need to [download the offical FFmpeg executables](https://ffmpeg.org/download.html#build-windows) or from [here on Github](https://github.com/BtbN/FFmpeg-Builds/releases), it's free as well.
+Then you need to [download the offical FFmpeg executables](https://ffmpeg.org/download.html#build-windows) or from [here on Github](https://github.com/BtbN/FFmpeg-Builds/releases), it's free as well.
 
 By default these scripts assume the path to FFmpeg.exe is `c:\Program Files\ffmpeg\bin`, so you can simply extract the downloaded ffmpeg archive into `c:\Program Files\ffmpeg`. If you place ffmpeg into a different folder, you will need to edit the `stf.path.ffmpeg` option in the settings file named `sendtoffmpeg_settings.cmd`. There's a full description for each option in that file.
 
 # Usage
 
 ## Windows explorer's Send To menu
+
+<img src="https://github.com/keerah/SendTo_FFmpeg/assets/9025818/cccdec6b-e887-4c94-b498-36987db94a92)" width=65%>
+
 You can integrate these batches into Windows' `Send To` menu (right-click on any file in the Explorer). Now it's automated and easy to do.
 
 After you unpacked the scripts into their permanent location, just run the file `Create_SendTo_Shortcuts.bat` by double-clicking it and follow instructions. It will create all the shortcut files for you and will open the folder containing them. There's plenty of presets already and you might decide to remove some of the links to unclutter the menu.
@@ -31,6 +43,9 @@ Just drag your files over the corresponding `.bat` file's icon. You can drag fil
 Presets are built in groups dedicated to a particular encoder.
 
 ## Creating new presets
+
+<img src="https://github.com/keerah/SendTo_FFmpeg/assets/9025818/c1112ed9-7999-42d4-a3ca-fa29292643a3)" width=65%>
+
 Creating your own preset is now much more convenient. If there's a preset for the encoder you require a new preset to be made with, you can simply duplicate it and change the basic options in the topmost section of the preset by editing it in any text editor. It's more complicated to create a preset for encoder that is not represented in this pack. Feel free to ping me in [Issues](https://github.com/keerah/SendTo_FFmpeg/issues) with your request.
 
 ## Meta-options
@@ -39,6 +54,8 @@ This new feature simplifies the preset adjustments. For now there's just one `co
 # User settings
 
 **SendTo** has its own global settings, that you can read more about in the `sendtoffmpeg_settings.cmd` file. They affect all presets at once. You can change them by simply editing this file in a text editor. Each option in that file has a full description of its functionality.
+
+<img src="https://github.com/keerah/SendTo_FFmpeg/assets/9025818/55a6320f-e1aa-45ba-8aa1-6f03c5ec1e2a" width=65%>
 
 ## Global vs Local settings
 You can have very different settings for your current (and any other) folder by making a copy of `sendtoffmpeg_settings.cmd` in that folder. All parameters you change in it will affect only the files that belong to this folder. It can be any setting available: the framerate setting, or descriptive naming flag or even the path to **FFMpeg** itself, so you can use different versions for different cases.
