@@ -1,13 +1,13 @@
 # Description
 
-SendTo_FFmpeg is a nearly zero-dependacy workframe that solves all of your transcoding needs right from the Windows explorer (or from the command line).
-This is a set of tools I develop mainly for myself and it saves me tons of time in everyday work. This set allows to to transode virtually anything into everything, it supports image sequences and hardware acceleration.
+`SendTo_FFmpeg` is a zero-dependecy (except FFmpeg itself) workframe that helps you with repetitive and bulk transcoding tasks right from the Windows explorer (or from the command line).
+This set of scripts can help you transode virtually everything into anything, it supports image sequences (for both input and/or output) and hardware acceleration.
 
-The scripts are simple Windows batch sripts that you can engage via drag-n-drop or by using a provided script to incorporate them into the Explorer's `Send To` menu.
-Each preset is a batch file that initializes the transoding settings and pass them along with your files to FFmpeg. These presets are easy to edit and it's eqsy to create new presets of your own.
+The presets are simple Windows batch sripts that you engage via drag-n-drop or by using a provided script to incorporate them into the Explorer's `Send To` menu.
+Each preset is a batch file that initializes the transoding settings and pass them along with your files to FFmpeg. 
 
-There's a separate batch file that contains all global settings used by every preset. But the settings can also be localized (overriden) to a specific folder by copying and modifying the settings file into that folder.
-`SendTo_FFmpeg` is easy to get up and running and to configure using a simple text editor.
+There's a separate batch file that contains all global settings used by all presets. But the settings can also be localized (overriden) to a specific folder by copying and modifying the settings file into that folder.
+`SendTo_FFmpeg` presets are easy to run and to modify using a simple text editor.
 
 <img src="https://github.com/keerah/SendTo_FFmpeg/assets/9025818/a6dbd6f0-73a2-484d-aaa1-0147b31e50ee)" alt="SendTo interface" width=80%>
 
@@ -28,9 +28,9 @@ By default these scripts assume the path to FFmpeg.exe is `c:\Program Files\ffmp
 
 You can integrate these batches into Windows' `Send To` menu (right-click on any file in the Explorer). Now it's automated and easy to do.
 
-After you unpacked the scripts into their permanent location, just run the file `Create_SendTo_Shortcuts.bat` by double-clicking it and follow instructions. It will create all the shortcut files for you and will open the folder containing them. There's plenty of presets already and you might decide to remove some of the links to unclutter the menu.
+After you unpacked the scripts into their permanent location, just run the file `Create_SendTo_Shortcuts.bat` by double-clicking it and follow instructions. This script requires VB script enabled on your system. It will create all the shortcut files for you and will open the folder containing them. There's plenty of presets already and you might decide to remove some of the links to unclutter the menu. 
 
-That's all. Now you can right-click on any file(s), navigate to `Send To` menu item and select one of the presets there. The corresponding `.bat` file will do the rest and will place the result into the same folder with a suffix like `_CUDA_420_high.mp4` added to the filename(s).
+Now you can right-click on any file(s), navigate to `Send To` menu item and select one of the presets there. The corresponding `.bat` file will do the rest and will place the result into the same folder with a suffix like `_yuv420p_20M_aac320k.mp4` added to the filename(s). This is the `Descriptive name` feature, that you can disable in the settings.
 
 ## Drag-n-drop
 Just drag your files over the corresponding `.bat` file's icon. You can drag files one by one, each will be encoded in a separate process, you can also select multiple files for any script except a couple. Each script announces its features and reports about the process, so keep an eye on the output.
