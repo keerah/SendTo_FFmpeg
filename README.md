@@ -6,7 +6,7 @@ This set of scripts can help you transode virtually everything into anything, it
 The presets are simple Windows batch sripts that you engage via drag-n-drop or by using a provided script to incorporate them into the Explorer's `Send To` menu.
 Each preset is a batch file that initializes the transoding settings and pass them along with your files to FFmpeg. 
 
-There's a separate batch file that contains all global settings used by all presets. But the settings can also be localized (overriden) to a specific folder by copying and modifying the settings file into that folder.
+There's a separate batch file that contains all global settings used by all presets. And these settings can be localized (overriden) to a specific folder by copying and modifying that settings file into the folder.
 `SendTo_FFmpeg` presets are easy to run and to modify using a simple text editor.
 
 <img src="https://github.com/keerah/SendTo_FFmpeg/assets/9025818/a6dbd6f0-73a2-484d-aaa1-0147b31e50ee)" alt="SendTo interface" width=80%>
