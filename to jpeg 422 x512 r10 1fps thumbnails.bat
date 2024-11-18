@@ -4,13 +4,13 @@ REM Download from https://github.com/keerah/SendTo_FFmpeg
 REM jpeg compatible preset
 
 REM === compression settings =======================================================================
-SET "wset.out.video.rate=20"
+SET "wset.out.video.rate=10"
 	REM mjpeg codec supports: 2 - 32 (high to low quality)
 SET "wset.out.video.fps=1"
 	REM Output framerate in Hz. 1 is to output 1 frame per second. Leave empty for no change. Set to negative value to override input framerate to the Abs(fps), this is useful for Gifs to presere all frames but change speed
-SET "wset.out.video.scale.x=256"
+SET "wset.out.video.scale.x=-1"
 	REM Leave empty to disable scaling. -1 is to scale proportionally, -2 to also keep it to multiple of 2
-SET "wset.out.video.scale.y=-1"
+SET "wset.out.video.scale.y=512"
 	REM Leave empty to disable scaling. -1 is to scale proportionally, -2 to also keep it to multiple of 2
 SET "wset.out.video.scale.algo=lanczos"
 	REM bilinear, bicubic, bicublin, gauss, sinc, lanczos, spline and more https://ffmpeg.org/ffmpeg-scaler.html

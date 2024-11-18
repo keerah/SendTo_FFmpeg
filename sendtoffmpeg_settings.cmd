@@ -56,7 +56,7 @@ REM   After the code fails to find frame numbers in the end of the filename, it 
 REM   to find the first delimiter symbol and detect if there's frame number after it.
 REM   Set this to SET "frdelim=" (empty string) if you do not want this detection to run.
 
-SET "stf.cm.on=1"
+SET "stf.cm.on=0"
 REM Color managment toggle
 REM   If set to 1 the color management is on
 
