@@ -75,7 +75,7 @@ You can have very different settings for your current (and any other) folder by 
 
 # Compatibility
 
-FFmpeg 4.3+, 5 and 6 compatible
+FFmpeg 4.3 - 7 compatible
 
 No other dependencies 
 
