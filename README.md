@@ -68,13 +68,6 @@ You can have very different settings for your current (and any other) folder by 
 - If all attempts to detect the frame counter fail, you will get a single frame output.
 - If you select a few frames that belong to different sequences, they will be transcoded independently. If you select a few images of the same image sequence you will get separate outputs for each with different in-points corresponding to the selected frames.
 
-# Color management
-
-Color management feature is still work in progress, no actual color conversion is applied in current beta.
-
-There's a new section in each of the presets that defines 4 main parameters for both input and output: colorspace, primaries, transfer function and color range. The list of available options attached. 
-There's also the new global option `stf.cm.on` that toggles the color management for all presetets. By default it is on (set to 1).
-
 # Limitations
 
 - **SendTo** currently considers the first video and audio streams as the source. Although FFmpeg still auto resolves other streams, there's no guarantee it'll work out for each case.
