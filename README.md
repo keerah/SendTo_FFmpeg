@@ -16,7 +16,7 @@ There's a separate batch file that contains all global settings used by all pres
 
 First click `Code` -> `Donwload ZIP` on this page or downlad from the [releases page](https://github.com/keerah/SendTo_FFmpeg/releases) to get all the scripts. Unpack the downloaded zip to any convenient location where these presets will stay present.
 
-Then you need to [download the offical FFmpeg executables](https://ffmpeg.org/download.html#build-windows) or from [here on Github](https://github.com/BtbN/FFmpeg-Builds/releases), it's free as well.
+Then you need to [download the offical FFmpeg executables](https://ffmpeg.org/download.html#build-windows) or from [here on Github](https://github.com/BtbN/FFmpeg-Builds/releases), it's free as well. Use static build.
 
 By default these scripts assume the path to FFmpeg.exe is `c:\Program Files\ffmpeg\bin`, so you can simply extract the downloaded ffmpeg archive into `c:\Program Files\ffmpeg`. If you place ffmpeg into a different folder, you will need to edit the `stf.path.ffmpeg` option in the settings file named `sendtoffmpeg_settings.cmd`. There's a full description for each option in that file.
 
